@@ -33,7 +33,7 @@
               </div>
               <div>
                 <button class="session_btn delete" type="button" @click="deleteSet(exercise, set)">&#10005;</button>
-                <button class="session_btn done" type="button" @click="doneSet(exercise.name, index)">&#10004;</button>
+                <button v-if="!set.rest_time" class="session_btn done" type="button" @click="doneSet(exercise.name, index)">&#10004;</button>
               </div>
             </div>
           </div>
@@ -127,7 +127,7 @@ export default {
           {
             reps: 0,
             weight: "",
-            rest_time: "",
+            rest_time: 0,
           }
         ]
       }))
@@ -152,44 +152,35 @@ export default {
       }
     },
     doneSet(exerciseName, index) {
-       // Mulai timer istirahat (1 menit = 60.000 ms)
-       console.log(exerciseName, index)
+      console.log(exerciseName, index)
       this.restTime = 60000;
       this.isResting = true;
 
       this.restTimer = setInterval(() => {
         if (this.restTime <= 0) {
-          this.stopRest();
+          this.stopRest(exerciseName, index);
         } else {
-          const targetExercise = sessionData.exercises.find(exercise => exercise.exercise_name === exerciseName);
+          const targetExercise = this.form.exercises.find(exercise => exercise.exercise_name === exerciseName);
           if (targetExercise) {
             targetExercise.sets[index].rest_time += 1000;
           }
-          this.restTime -= 1000; // Kurangi 1 detik
+          this.restTime -= 1000
         }
       }, 1000);
     },
     stopRest() {
       clearInterval(this.restTimer); // Hentikan timer
       this.isResting = false;
-
-      // Catat waktu istirahat yang selesai
-      const targetExercise = sessionData.exercises.find(exercise => exercise.exercise_name === exerciseName);
-      if (targetExercise) {
-        targetExercise.sets[index].rest_time += 1000;
-      }
-      this.form.exercises.forEach((exercise) => {
-        exercise.sets.forEach((set) => {
-          if (set.reps === 0 && set.weight === "") {
-            set.rest_time = this.restTime;
-          }
-        });
-      });
-
       this.restTime = 0; // Setel waktu istirahat ke 0
     },
     generateCalendarDescription(data) {
-      // Membangun deskripsi awal dengan informasi umum
+
+      function formatRestTime(restTime) {
+        const minutes = Math.floor(restTime / 60000);
+        const seconds = Math.floor((restTime % 60000) / 1000);
+        return `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+      }
+
       let description = `**Nama Sesi:** ${data.session_name}\n`;
       description += `**Berat Badan:** ${data.body_weight} kg\n`;
       description += `**Lokasi:** ${data.location}\n`;
@@ -203,8 +194,8 @@ export default {
         description += `${index + 1}. **${exercise.exercise_name}**\n`;
         exercise.sets.forEach((set, setIndex) => {
           description += `   - Set ${setIndex + 1}: ${set.reps} repetisi, Berat ${set.weight} kg\n`;
+          description += `   - Istirahat: ${formatRestTime(set.rest_time)}\n\n`;
         });
-        description += `   - Istirahat: Tidak ada istirahat di antara set\n\n`;
       });
 
       return description;
