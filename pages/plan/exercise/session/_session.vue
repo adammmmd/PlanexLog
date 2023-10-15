@@ -3,6 +3,10 @@
     <header class="session_header-container">
         <div @click="cancelSession" class="session_header-back-btn">&#10005;</div>
         <h2 class="session_header-title">{{ stopwatchDisplay }}</h2>
+        <div>
+          <p v-if="isResting" >{{ formatRestTime }}</p>
+          <button v-if="isResting" @click="stopRest()">stop rest</button>
+        </div>
     </header>
     <form class="session_form-container">
       <div class="session_form-head">
@@ -13,7 +17,7 @@
         </div>
       </div>
       <div class="session_form-body">
-        <div class="session_exercise-container" v-for="(exercise, i) in plan">
+        <div class="session_exercise-container" v-for="(exercise, i) in plan" :key="i">
           <div class="session_exercise" @click="toggleSession(i)">
             <div class="session_exercise-desc">
               <img class="session_exercise-img" :src="exercise.gifUrl" :alt="exercise.name">
@@ -21,13 +25,16 @@
             </div>
             <p>&#65086;</p>
           </div>
-          <div class="session_rep-weight" v-for="(set, index) in exercise.sets" v-if="activeSessionIndex === i">
-            <div>
-              <input v-model="set.reps" type="number" name="repetition" :id="`${exercise.name}repetition${index}`" placeholder="Rep" required>
-              <input v-model="set.weight" type="number" name="weight" :id="`${exercise.name}weight${index}`" placeholder="Weight" required>
-            </div>
-            <div>
-              <button class="session_btn delete" type="button" @click="deleteSet(exercise, set)">&#10005;</button>
+          <div v-if="activeSessionIndex === i">
+            <div class="session_rep-weight" v-for="(set, index) in exercise.sets" :key="index">
+              <div>
+                <input v-model="set.reps" type="number" name="repetition" :id="`${exercise.name}repetition${index}`" placeholder="Rep" required>
+                <input v-model="set.weight" type="number" name="weight" :id="`${exercise.name}weight${index}`" placeholder="Weight" required>
+              </div>
+              <div>
+                <button class="session_btn delete" type="button" @click="deleteSet(exercise, set)">&#10005;</button>
+                <button class="session_btn done" type="button" @click="doneSet(exercise.name, index)">&#10004;</button>
+              </div>
             </div>
           </div>
           <button class="session_add-btn" type="button" @click="tambahSet(exercise.name)" v-if="activeSessionIndex === i">add</button>          
@@ -61,6 +68,9 @@ export default {
       stopwatch: null,
       stopwatchDisplay: "00:00:00",
       activeSessionIndex: null,
+      restTimer: null, // Timer istirahat
+      restTime: 0,    // Waktu istirahat dalam milidetik  
+      isResting: false
     }
   },
   mounted() {
@@ -98,7 +108,12 @@ export default {
       } else {
         return [];
       }
-    }
+    },
+    formatRestTime() {
+      const minutes = Math.floor(this.restTime / 60000);
+      const seconds = Math.floor((this.restTime % 60000) / 1000);
+      return `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+    },
   },
   methods: {
     cancelSession() {
@@ -135,6 +150,43 @@ export default {
           matchingExercise.sets.splice(setIndex, 1);
         }
       }
+    },
+    doneSet(exerciseName, index) {
+       // Mulai timer istirahat (1 menit = 60.000 ms)
+       console.log(exerciseName, index)
+      this.restTime = 60000;
+      this.isResting = true;
+
+      this.restTimer = setInterval(() => {
+        if (this.restTime <= 0) {
+          this.stopRest();
+        } else {
+          const targetExercise = sessionData.exercises.find(exercise => exercise.exercise_name === exerciseName);
+          if (targetExercise) {
+            targetExercise.sets[index].rest_time += 1000;
+          }
+          this.restTime -= 1000; // Kurangi 1 detik
+        }
+      }, 1000);
+    },
+    stopRest() {
+      clearInterval(this.restTimer); // Hentikan timer
+      this.isResting = false;
+
+      // Catat waktu istirahat yang selesai
+      const targetExercise = sessionData.exercises.find(exercise => exercise.exercise_name === exerciseName);
+      if (targetExercise) {
+        targetExercise.sets[index].rest_time += 1000;
+      }
+      this.form.exercises.forEach((exercise) => {
+        exercise.sets.forEach((set) => {
+          if (set.reps === 0 && set.weight === "") {
+            set.rest_time = this.restTime;
+          }
+        });
+      });
+
+      this.restTime = 0; // Setel waktu istirahat ke 0
     },
     generateCalendarDescription(data) {
       // Membangun deskripsi awal dengan informasi umum
