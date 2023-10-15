@@ -43,7 +43,6 @@ export default {
         },
         handleAuthClick() {
             this.tokenClient.callback = async (resp) => {
-                console.log(resp)
                 if (resp.error !== undefined) {
                     throw resp;
                 } else {
@@ -68,31 +67,24 @@ export default {
             try {
                 response = await gapi.client.calendar.calendarList.list()
             } catch (err) {
-                console.log(err)
                 return;
             }
-            console.log(response)
             const hasPlanExApp = response.result.items.some(item => item.summary === "PlanEx App");
 
             if (!hasPlanExApp) {
                 try {
                     const buatCalendar = await gapi.client.calendar.calendars.insert({"summary": "PlanEx App"})
-                    console.log(buatCalendar.result.id)
                     this.$store.dispatch('google/setCalendarId', buatCalendar.result.id)
-                    console.log(buatCalendar)
                 } catch(err) {
-                    console.log(err)
+                    throw(err)
                 }
-                console.log("Tidak ada yang memiliki summary 'PlanEx App'");
             } 
             const items = response.result.items
             for(let item of items) {
                 if(item.summary === "PlanEx App") {
-                    console.log(item.id)
                     this.$store.dispatch('google/setCalendarId', item.id)
                 }
             }    
-            console.log("Ada yang memiliki summary 'PlanEx App'");
         },
         async getData() {
             try {
