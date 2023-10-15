@@ -1,0 +1,36 @@
+[
+    {
+        "plan_name": "StrongLifts 5x5",
+        "workout_list": [
+            {
+                "workout_name": "Workout A",
+                "exercises": ["barbell squat (on knees)", "barbell bench press", "barbell bent over row"]
+            },
+            {
+                "workout_name": "Workout B",
+                "exercises": ["barbell squat (on knees)", "barbell standing wide military press", "barbell deadlift"]
+            }
+        ]
+    },
+    {
+        "plan_name": "Power Hypertrophy Upper Lower",
+        "workout_list": [
+            {
+                "workout_name": "Upper Power",
+                "exercises": ["barbell bench press", "dumbbell incline bench press", "barbell bent over row", "cable lat pulldown full range of motion", "barbell standing wide military press", "barbell biceps curl (with arm blaster)", "barbell lying triceps extension"]
+            },
+            {
+                "workout_name": "Lower Power",
+                "exercises": ["barbell squat (on knees)", "barbell deadlift", "lever alternate leg press ", "lever seated leg curl", "lever seated calf raise "]
+            },
+            {
+                "workout_name": "Upper Hypertrophy",
+                "exercises": ["barbell incline bench press", "dumbbell fly", "cable seated row", "kettlebell one arm row", "dumbbell lateral raise", "dumbbell incline biceps curl", "cable triceps pushdown (v-bar)"]
+            },
+            {
+                "workout_name": "Lower Hypertrophy",
+                "exercises": ["barbell front squat", "barbell lunge", "lever leg extension", "lever seated leg curl", "lever seated calf raise ", "sled calf press on leg press"]
+            }
+        ]
+    }
+]
