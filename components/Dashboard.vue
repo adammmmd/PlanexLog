@@ -1,10 +1,8 @@
 <template>
-    <nav class="navbar">
-        <div class="navbar-container">
-            <nuxt-link class="nav-link" to="/plan" exact>Plans</nuxt-link>
-            <nuxt-link class="nav-link" to="/calendar" exact>Calendar</nuxt-link>
-            <nuxt-link class="nav-link" to="/profile" exact>Profile</nuxt-link>
-        </div>
+    <nav class="btn-group btn-group-lg fixed-bottom mb-3 start-50 translate-middle-x" role="group">
+        <nuxt-link class="btn btn-light btn-outline-dark border-2 rounded-0" to="/plan" exact>Plans</nuxt-link>
+        <nuxt-link class="btn btn-light btn-outline-dark border-2 rounded-0" to="/calendar" exact>Calendar</nuxt-link>
+        <nuxt-link class="btn btn-light btn-outline-dark border-2 rounded-0" to="/profile" exact>Profile</nuxt-link>
     </nav>
 </template>
 
@@ -14,7 +12,7 @@
 </script>
 
 <style> 
-.navbar {
+/* .navbar {
     position: fixed;
     left: 50%;
     bottom: 0px;
@@ -39,7 +37,7 @@
     text-align: center;
     text-decoration: none;
     font-family: var(--ff-primary);
-}
+} */
 
 .nuxt-link-exact-active {
     background-color: yellow;

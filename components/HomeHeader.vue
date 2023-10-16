@@ -1,10 +1,13 @@
 <template>
-    <header class="home-header_container">
-        <h2 class="home-header_title fs-600">PlanEx</h2>
-        <button v-if="!loggedIn" class="home-header_btn" id="authorize_button" @click="handleAuthClick">Authorize</button>
-    
-        <nuxt-link v-if="loggedIn" class="home-header_btn" to="/plan">Dashboard</nuxt-link>
-    </header>
+    <nav class="navbar navbar-expand-lg bg-white fixed-top border border-black border-2 p-0">
+        <div class="container-fluid pe-0">
+            <h2 class="navbar-brand m-0">PlanEx</h2>
+            <div class="d-flex">
+                <button class="btn btn-dark rounded-0" v-if="!loggedIn" id="authorize_button" @click="handleAuthClick">Authorize</button>
+                <nuxt-link class="btn btn-outline-dark border-1 rounded-0" v-if="loggedIn" to="/plan">Dashboard</nuxt-link>
+            </div>
+        </div>
+    </nav>
 </template>
 
 <script>
@@ -109,7 +112,7 @@ export default {
 
 </script>
 
-<style>
+<!-- <style>
 .home-header_container {
     background-color: #ffffff;
     border: 3px solid #000000;
@@ -139,4 +142,4 @@ export default {
 
 
 </style>
-
+ -->

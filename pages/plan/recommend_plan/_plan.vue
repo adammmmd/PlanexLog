@@ -1,17 +1,9 @@
 <template>
-    <div class="exercise-container">
+    <div>
         <Header :title="this.$route.params.plan"/>
-        
-        <div class="exercise-list-container">
+        <div >
             <ExerciseList :plan="recommendPlan" />
-            <!-- <div v-for="exercise in recommendPlan" class="exercise-list">
-                <img class="exercise-img" :src="exercise.gifUrl" :alt="exercise.name">
-                <div class="exercise-desc">
-                    <h2>{{exercise.name}}</h2>
-                    <p>{{exercise.target}}</p>
-                </div>
-            </div> -->
-            <button class="add_plan" @click="addPlan">Add to Plan</button>
+            <button class="btn btn-light btn-outline-dark border-2 rounded-0 border-black" @click="addPlan">Add to Plan</button>
         </div>
     </div>
 </template>

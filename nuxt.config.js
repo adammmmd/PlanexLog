@@ -15,13 +15,13 @@ export default {
     ],
     link: [
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
-      // { rel: 'stylesheet', href: 'https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css' }
+      { rel: 'stylesheet', href: "https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" }  
     ],
     script: [
-      // { src: 'https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js', body: true }
       { src: "https://apis.google.com/js/api.js", defer: true, async: true, },
       { src: "https://accounts.google.com/gsi/client", defer: true, async: true, },
-      { src:"https://apis.google.com/js/platform.js?onload=init", defer: true, async: true }
+      { src: "https://apis.google.com/js/platform.js?onload=init", defer: true, async: true },
+      { src: "https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" }
     ]
   },
 

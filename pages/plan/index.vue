@@ -1,12 +1,12 @@
 <template>
-    <div class="plan-container">
-        <section class="plan-list_container">
-            <h1 class="plan-list_title">Your Plan</h1>
-            <div class="plan-list">
-                <div class="exercise-plan" >
-                    <nuxt-link class="add-plan" to="/plan/form">+</nuxt-link>
+    <div>  
+        <section class="mb-5">
+            <h1 class="fs-1">Your Plan</h1>
+            <div class="d-flex px-5">
+                <div class="card d-flex align-items-center justify-content-center border-2 rounded-0 border-black bg-white me-3" style="width: 10rem; height: 7rem;">
+                    <nuxt-link class="card-title text-center text-decoration-none" to="/plan/form">+</nuxt-link>
                 </div>
-                <div v-for="plan in plans" class="exercise-plan">
+                <div v-for="(plan, i) in plans" :key="i">
                     <ExercisePlan :planName="plan.plan_name" />
                 </div>
             </div>
@@ -61,7 +61,7 @@ export default {
 </script>
 
 <style>
-.plan-container {
+/* .plan-container {
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
@@ -102,12 +102,12 @@ export default {
     align-items: center;
     justify-content: flex-start;
     overflow: auto;
-    -ms-overflow-style: none;  /* Internet Explorer 10+ */
-    scrollbar-width: none;  /* Firefox */
+    -ms-overflow-style: none; 
+    scrollbar-width: none;  
 }
 
 .plan-list::-webkit-scrollbar { 
-    display: none;  /* Safari and Chrome */
+    display: none;
 }
 
 .exercise-plan {
@@ -135,5 +135,5 @@ export default {
     justify-content: center;
     align-items: center;
     text-decoration: none;
-}
+} */
 </style>
