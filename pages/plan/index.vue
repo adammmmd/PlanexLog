@@ -2,9 +2,11 @@
     <div>  
         <section class="mb-5">
             <h1 class="fs-1">Your Plan</h1>
-            <div class="d-flex px-5">
-                <div class="card d-flex align-items-center justify-content-center border-2 rounded-0 border-black bg-white me-3" style="width: 10rem; height: 7rem;">
-                    <nuxt-link class="card-title text-center text-decoration-none" to="/plan/form">+</nuxt-link>
+            <div class="d-flex px-5 overflow-auto">
+                <div>
+                    <div class="card d-flex align-items-center justify-content-center border-2 rounded-0 border-black bg-white me-3" style="width: 10rem; height: 7rem;">
+                        <nuxt-link class="card-title text-center text-decoration-none" to="/plan/form">+</nuxt-link>
+                    </div>
                 </div>
                 <div v-for="(plan, i) in plans" :key="i">
                     <ExercisePlan :planName="plan.plan_name" />
