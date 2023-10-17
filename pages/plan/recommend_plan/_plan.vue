@@ -1,9 +1,9 @@
 <template>
     <div>
         <Header :title="this.$route.params.plan"/>
-        <div >
+        <div class="card border-1 rounded-0 border-black my-4 p-2 d-flex align-items-stretch justify-content-start">
             <ExerciseList :plan="recommendPlan" />
-            <button class="btn btn-light btn-outline-dark border-2 rounded-0 border-black" @click="addPlan">Add to Plan</button>
+            <button class="btn btn-light btn-outline-dark border-2 rounded-0 border-black ml-auto align-self-end" @click="addPlan">Add to Plan</button>
         </div>
     </div>
 </template>

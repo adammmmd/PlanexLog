@@ -1,5 +1,5 @@
 <template>
-    <nav class="btn-group btn-group-lg fixed-bottom mb-3 start-50 translate-middle-x" role="group">
+    <nav class="btn-group fixed-bottom mb-3 bottom-0 start-50 translate-middle-x" role="group">
         <nuxt-link class="btn btn-light btn-outline-dark border-2 rounded-0" to="/plan" exact>Plans</nuxt-link>
         <nuxt-link class="btn btn-light btn-outline-dark border-2 rounded-0" to="/calendar" exact>Calendar</nuxt-link>
         <nuxt-link class="btn btn-light btn-outline-dark border-2 rounded-0" to="/profile" exact>Profile</nuxt-link>
