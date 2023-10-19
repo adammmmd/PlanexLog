@@ -21,8 +21,10 @@
         <div class="session_exercise-container" v-for="(exercise, i) in plan" :key="i">
           <div class="session_exercise" @click="toggleSession(i)">
             <div class="session_exercise-desc">
-              <img class="session_exercise-img" :src="exercise.gifUrl" :alt="exercise.name">
-              <p>{{ exercise.name }}</p>
+              <img class="session_exercise-img" src="https://v2.exercisedb.io/image/OMVlTBTkvcZehf" :alt="exercise.name">
+              <!-- <img class="session_exercise-img" :src="exercise.gifUrl" :alt="exercise.name"> -->
+              <p>3/4 sit-up</p>
+              <!-- <p>{{ exercise.name }}</p> -->
             </div>
             <p>&#65086;</p>
           </div>
