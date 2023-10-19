@@ -1,13 +1,14 @@
 <template>
   <div class="session_container">
-    <header class="session_header-container">
+    <Header :title="stopwatchDisplay" />
+    <!-- <header class="session_header-container">
         <div @click="cancelSession" class="session_header-back-btn">&#10005;</div>
-        <h2 class="session_header-title">{{ stopwatchDisplay }}</h2>
-        <div>
-          <p v-if="isResting" >{{ formatRestTime }}</p>
-          <button v-if="isResting" @click="stopRest()">stop rest</button>
-        </div>
-    </header>
+        <h2 class="session_header-title"></h2>
+      </header> -->
+    <div>
+      <p v-if="isResting" >{{ formatRestTime }}</p>
+      <button v-if="isResting" @click="stopRest()">stop rest</button>
+    </div>
     <form class="session_form-container">
       <div class="session_form-head">
         <p class="title">{{ this.$route.params.session }}</p>
@@ -46,9 +47,13 @@
 </template>
 <script>
 import { mapGetters } from "vuex"
+import Header from '@/components/Header.vue'
 
 export default {
   layout: 'plain',
+  components: {
+    Header
+  },
   data() {
     return{
       form: {
@@ -269,7 +274,7 @@ export default {
 }
 </script>  
 <style>
-.session_header-container {
+/* .session_header-container {
     border: 3px solid black;
     position: fixed;
     top: 0;
@@ -343,7 +348,7 @@ padding: 80px 0 150px 0;
     margin-bottom: 15px;
     display: flex;
     flex-direction: column;
-    /* justify-content: center; */
+
     align-items: center;
 }
 
@@ -406,5 +411,5 @@ background-color: greenyellow;
     background-color: inherit;
     padding: 10px;
     cursor: pointer;
-}
+} */
 </style>

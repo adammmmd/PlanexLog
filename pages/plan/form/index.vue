@@ -1,31 +1,37 @@
 <template>
-    <div class="form-container">
+    <div>
         <Header title="Build Plan"/>
-        <form class="add-plans" v-on:submit.prevent="handleSubmit">
-            <div class="plan-header">
-                <img class="plan-img-logo" src="~/assets/istockphoto-1248698782-612x612.jpg" alt="exercise">
-                <input v-model="form.plan_name" class="plan-name" type="text" placeholder="Exercise Name" required>
-            </div>
-            <div class="input-container">
-                <input class="search-bar-exercise" type="search" name="search" id="search" v-model="searchText" placeholder="Search">
-                <select class="sort-exercise" name="target" id="target" v-model="selectedTarget">
-                    <option value="">select target</option>
-                    <option v-for="target in allTarget" :value="target">{{ target }}</option>
-                </select>
-            </div>
-            <div class="list-container">
-                <label v-for="exercise in filteredExercises" class="exercise-label" :for="exercise.name" :key="exercise.id">
-                    <input class="exercise-check" type="checkbox" :name="exercise.name" :value="exercise.name" :id="exercise.name" v-model="form.exercises">
-                    <img class="exercise-img" :src="exercise.gifUrl" :alt="exercise.name">
-                    <div class="title-desc-container">
-                        <h3 class="title-exercise">{{ exercise.name }}</h3>
-                        <p class="desc-exercise">{{ exercise.target }}</p>
+        <div class="my-5">
+            <form class="card border-1 rounded-0 border-black d-flex flex column justify-content-start align-items-stretch p-4 m-auto" style="height: 100vh;" v-on:submit.prevent="handleSubmit">
+                <div class="d-flex flex-row justify-content-start align-items-end mb-3">
+                    <img class="img-thumbnail border-black border-1 rounded-0" style="object-fit: cover; width: 50px; height: 50px;" src="~/assets/istockphoto-1248698782-612x612.jpg" alt="exercise">
+                    <input v-model="form.plan_name" class="form-control form-control-sm border-black border-1 rounded-0 ms-3" type="text" placeholder="Exercise Name" required>
+                </div>
+                <div class="d-flex flex-row justify-content-center align-items-center my-3">
+                    <input class="form-control form-control-sm border-black border-1 rounded-0" type="search" name="search" id="search" v-model="searchText" placeholder="Search">
+                    <select class="form-select form-select-sm border-black border-1 rounded-0 w-25 ms-1" name="target" id="target" v-model="selectedTarget">
+                        <option value="">select target</option>
+                        <option v-for="(target, i) in allTarget" :value="target" :key="i">{{ target }}</option>
+                    </select>
+                </div>
+                <div class="card border-black border-1 rounded-0 mb-2 d-flex flex-column overflow-auto">
+                    <div class="card d-flex flex-row align-items-center justify-content-start border-1 border-black rounded-0 p-2 m-0" v-for="exercise in filteredExercises" :key="exercise.id">
+                        <label  class="d-flex flex-row align-items-center justify-content-start" :for="exercise.name">
+                            <input type="checkbox" :name="exercise.name" :value="exercise.name" :id="exercise.name" v-model="form.exercises">
+                            <img class="img-thumbnail border-black border-1 rounded-0 ms-2" style="object-fit: cover; width: 50px; height: 50px;" :src="exercise.gifUrl" :alt="exercise.name">
+                            <div class="d-flex flex-column justify-content-start align-items-between ms-2" style="justify-items: stretch;">
+                                <h3 class="fs-6 fw-medium m-0">{{ exercise.name }}</h3>
+                                <p class="fs-6 m-0">{{ exercise.target }}</p>
+                            </div>
+                        </label>
                     </div>
-                </label>
-                <div class="add-30" @click="addExercise" v-if="hasMoreExercises">Load More</div>
-            </div>
-            <button type="submit" class="save-btn" :disabled="!form.plan_name || !isAtLeastOneCheckboxSelected">Save</button>
-        </form>
+                    <div class="d-grid">
+                        <button type="button" class="btn btn-outline-dark btn-white rounded-0" @click="addExercise" v-if="hasMoreExercises">Load More</button>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-outline-dark btn-white rounded-0" style="align-self: end;" :disabled="!form.plan_name || !isAtLeastOneCheckboxSelected">Save</button>
+            </form>
+        </div>
     </div>
 </template>
 
@@ -93,7 +99,7 @@ export default {
 </script>
 
 <style>
-
+/* 
 .form-container {
     min-height: 100%;
     display: flex;
@@ -145,7 +151,6 @@ export default {
     border-right: 2px solid black;
 }
 
-/* search, sort */
 .input-container {
     display: flex;
     justify-content: space-around;
@@ -168,7 +173,6 @@ export default {
     font-family: var(--ff-primary);
 }
 
-/*  */
 
 .list-container {
     border: 3px solid black;
@@ -179,12 +183,12 @@ export default {
     flex-direction: column;
     justify-content: flex-start;
     overflow: auto;
-    -ms-overflow-style: none;  /* Internet Explorer 10+ */
-    scrollbar-width: none;  /* Firefox */
+    -ms-overflow-style: none; 
+    scrollbar-width: none;  
 }
 
 .list-container::-webkit-scrollbar { 
-    display: none;  /* Safari and Chrome */
+    display: none;  
 }
 
 .exercise-label {
@@ -245,7 +249,7 @@ export default {
     text-align: center;
     font-family: var(--ff-primary);
 }
-
+ */
 
 
 </style>

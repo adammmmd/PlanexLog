@@ -1,11 +1,11 @@
 <template>
-    <div class="session-container">
+    <div>
         <Header :title="this.$route.params.exercise" />
-        <div class="plan-exercises-container">
+        <div class="card border-1 rounded-0 border-black d-flex flex column justify-content-between align-items-stretch p-4 my-5" style="max-height: 100vh;">
             <ExerciseList :plan="plan" />
-            <div class="btn_container">
-                <button class="delete-plan_btn" @click="deletePlan">Delete</button>
-                <nuxt-link class="start-session_btn" :to="`/plan/exercise/session/${this.$route.params.exercise}`">Start</nuxt-link>
+            <div class="align-self-end">
+                <button class="btn btn-light btn-outline-dark border-2 rounded-0 border-black ml-auto " style="justify-self: end;" @click="deletePlan">Delete</button>
+                <nuxt-link class="btn btn-light btn-outline-dark border-2 rounded-0 border-black ml-auto " style="justify-self: end;" :to="`/plan/exercise/session/${this.$route.params.exercise}`">Start</nuxt-link>
             </div>
         </div>
     </div>
@@ -44,14 +44,13 @@ export default {
 }
 </script>
 <style>
-.exercise-container {
+/* .exercise-container {
     background-color: white;
     width: 100%;
     height: 100vh;
     padding: 80px 0 150px 0;
 }
 
-/*  */
 
 .session_container {
 min-height: 100vh;
@@ -93,6 +92,6 @@ padding: 80px 0 150px 0;
     align-items: center;
     justify-content: flex-end;
     margin: 0px 10px 10px 10px;
-}
+} */
 
 </style>
