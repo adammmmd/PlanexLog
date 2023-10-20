@@ -1,5 +1,5 @@
 <template>
-  <div class="session_container">
+  <div>
     <Header :title="stopwatchDisplay" />
     <!-- <header class="session_header-container">
         <div @click="cancelSession" class="session_header-back-btn">&#10005;</div>
@@ -9,41 +9,40 @@
       <p v-if="isResting" >{{ formatRestTime }}</p>
       <button v-if="isResting" @click="stopRest()">stop rest</button>
     </div>
-    <form class="session_form-container">
-      <div class="session_form-head">
-        <p class="title">{{ this.$route.params.session }}</p>
-        <div class="session-weight-location">
-          <input v-model="form.body_weight" type="number" placeholder="body weight (kg)">
-          <input v-model="form.location" type="text" placeholder="location">
+    <form class="container border border-black border-1 rounded-0 p-3" style="max-height: 100vh;" v-on:submit.prevent="save">
+      <div class="container d-flex flex-column justify-content-center align-items-start mb-3">
+        <p class="fs-4">{{ this.$route.params.session }}</p>
+        <div class="d-flex flex-row">
+          <input class="border-black border-2 rounded-0 me-3" style="width: 3rem;" v-model="form.body_weight" type="number" placeholder="body weight (kg)">
+          <input class="border-black border-2 rounded-0 me-3" style="width: 6rem;" v-model="form.location" type="text" placeholder="location">
         </div>
       </div>
-      <div class="session_form-body">
-        <div class="session_exercise-container" v-for="(exercise, i) in plan" :key="i">
-          <div class="session_exercise" @click="toggleSession(i)">
-            <div class="session_exercise-desc">
-              <img class="session_exercise-img" src="https://v2.exercisedb.io/image/OMVlTBTkvcZehf" :alt="exercise.name">
-              <!-- <img class="session_exercise-img" :src="exercise.gifUrl" :alt="exercise.name"> -->
-              <p>3/4 sit-up</p>
-              <!-- <p>{{ exercise.name }}</p> -->
+      <!-- <div class="card border-black border-1 rounded-0 mb-2 d-flex flex-column overflow-auto"> -->
+        <div class="accordion accordion-flush overflow-auto" style="max-height: 200px;">
+          <div class="accordion-item border border-black border-1 rounded-0" v-for="(exercise, i) in plan" :key="i">
+            <div class="accordion-header">
+              <button type="button" class="accordion-button collapsed" data-bs-toggle="collapse" :data-bs-target="'#collapse-' + i">
+                <img class="img-thumbnail border-black border-1 rounded-0" style="object-fit: cover; width: 50px; height: 50px;" :src="exercise.gifUrl" :alt="exercise.name">
+                <p class="fs-6 m-0 ms-2">{{ exercise.name }}</p>
+              </button>
             </div>
-            <p>&#65086;</p>
-          </div>
-          <div v-if="activeSessionIndex === i">
-            <div class="session_rep-weight" v-for="(set, index) in exercise.sets" :key="index">
-              <div>
-                <input v-model="set.reps" type="number" name="repetition" :id="`${exercise.name}repetition${index}`" placeholder="Rep" required>
-                <input v-model="set.weight" type="number" name="weight" :id="`${exercise.name}weight${index}`" placeholder="Weight" required>
-              </div>
-              <div>
-                <button class="session_btn delete" type="button" @click="deleteSet(exercise, set)">&#10005;</button>
-                <button v-if="!set.rest_time" class="session_btn done" type="button" @click="doneSet(exercise.name, index)">&#10004;</button>
+            <div class="accordion-collapse collapse" :id="'collapse-' + i">
+              <div class="accordion-body" v-for="(set, index) in exercise.sets" :key="index">
+                <div>
+                  <input v-model="set.reps" type="number" name="reps" :id="`${exercise.name}repetition${index}`" placeholder="Rep" required>
+                  <input v-model="set.weight" type="number" name="weight" :id="`${exercise.name}weight${index}`" placeholder="Weight" required>
+                </div>
+                <div>
+                  <button type="button" @click="deleteSet(exercise, set)">&#10005;</button>
+                  <button v-if="!set.rest_time" type="button" @click="doneSet(exercise.name, index)">&#10004;</button>
+                </div>
+                <button class="" type="button" @click="tambahSet(exercise.name)" v-if="activeSessionIndex === i">add</button>          
               </div>
             </div>
           </div>
-          <button class="session_add-btn" type="button" @click="tambahSet(exercise.name)" v-if="activeSessionIndex === i">add</button>          
         </div>
-      </div>
-      <nuxt-link class="session_save-btn" to="/plan"><a @click="save">save session</a></nuxt-link>
+      <!-- </div> -->
+      <button type="submit">save session</button>
     </form>
   </div>
 </template>
@@ -240,6 +239,7 @@ export default {
       this.form.end.dateTime = new Date().toISOString();
       console.log(this.form);
       this.generateEvent()
+      this.$router.push('/plan')
     },
     startStopwatch() {
       this.stopwatch = setInterval(() => {
