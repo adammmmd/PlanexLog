@@ -2,7 +2,7 @@
     <div>
         <Header title="Build Plan"/>
         <div class="my-5">
-            <form class="card border-1 rounded-0 border-black d-flex flex column justify-content-start align-items-stretch p-4 m-auto" style="height: 100vh;" v-on:submit.prevent="handleSubmit">
+            <form class="card border-1 rounded-0 border-black d-flex flex-column justify-content-start align-items-stretch p-4 m-auto" style="height: 100vh;" v-on:submit.prevent="handleSubmit">
                 <div class="d-flex flex-row justify-content-start align-items-end mb-3">
                     <img class="img-thumbnail border-black border-1 rounded-0" style="object-fit: cover; width: 50px; height: 50px;" src="~/assets/istockphoto-1248698782-612x612.jpg" alt="exercise">
                     <input v-model="form.plan_name" class="form-control form-control-sm border-black border-1 rounded-0 ms-3" type="text" placeholder="Exercise Name" required>

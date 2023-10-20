@@ -5,20 +5,32 @@
         <div @click="cancelSession" class="session_header-back-btn">&#10005;</div>
         <h2 class="session_header-title"></h2>
       </header> -->
-    <div>
-      <p v-if="isResting" >{{ formatRestTime }}</p>
-      <button v-if="isResting" @click="stopRest()">stop rest</button>
+    <div class="modal fade" id="restTime" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" ref="restModal" @click="stopRest()">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="fs-4 m-0">Rest Time</h1>
+            <button type="button" @click="stopRest()" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <p class="fs-1 m-0">{{ formatRestTime }}</p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-outline-dark btn-white rounded-0" @click="stopRest()" data-bs-dismiss="modal">stop rest</button>
+          </div>
+        </div>
+      </div>
     </div>
-    <form class="container border border-black border-1 rounded-0 p-3" style="max-height: 100vh;" v-on:submit.prevent="save">
+
+    <form class="container border border-black border-1 rounded-0 d-flex flex-column justify-content-start align-items-stretch p-4 m-auto" style="max-height: 100vh;" v-on:submit.prevent="save">
       <div class="container d-flex flex-column justify-content-center align-items-start mb-3">
         <p class="fs-4">{{ this.$route.params.session }}</p>
         <div class="d-flex flex-row">
-          <input class="border-black border-2 rounded-0 me-3" style="width: 3rem;" v-model="form.body_weight" type="number" placeholder="body weight (kg)">
-          <input class="border-black border-2 rounded-0 me-3" style="width: 6rem;" v-model="form.location" type="text" placeholder="location">
+          <input class="border-black border-2 rounded-0 me-3" v-model="form.body_weight" type="number" placeholder="body weight (kg)">
+          <input class="border-black border-2 rounded-0 me-3" v-model="form.location" type="text" placeholder="location">
         </div>
       </div>
-      <!-- <div class="card border-black border-1 rounded-0 mb-2 d-flex flex-column overflow-auto"> -->
-        <div class="accordion accordion-flush overflow-auto" style="max-height: 200px;">
+      <div class="accordion accordion-flush border border-black border-1 rounded-0 overflow-auto mb-3" style="max-height: 400px;">
           <div class="accordion-item border border-black border-1 rounded-0" v-for="(exercise, i) in plan" :key="i">
             <div class="accordion-header">
               <button type="button" class="accordion-button collapsed" data-bs-toggle="collapse" :data-bs-target="'#collapse-' + i">
@@ -27,22 +39,23 @@
               </button>
             </div>
             <div class="accordion-collapse collapse" :id="'collapse-' + i">
-              <div class="accordion-body" v-for="(set, index) in exercise.sets" :key="index">
-                <div>
-                  <input v-model="set.reps" type="number" name="reps" :id="`${exercise.name}repetition${index}`" placeholder="Rep" required>
-                  <input v-model="set.weight" type="number" name="weight" :id="`${exercise.name}weight${index}`" placeholder="Weight" required>
+              <div class="accordion-body" >
+                <div class="d-flex flex-row justify-content-between align-items-center" v-for="(set, index) in exercise.sets" :key="index">
+                  <div>
+                    <input v-model="set.reps" type="number" name="reps" :id="`${exercise.name}repetition${index}`" placeholder="Rep" required>
+                    <input v-model="set.weight" type="number" name="weight" :id="`${exercise.name}weight${index}`" placeholder="Weight" required>
+                  </div>
+                  <div>
+                    <button type="button" @click="deleteSet(exercise, set)">&#10005;</button>
+                    <button v-if="!set.rest_time" type="button" @click="doneSet(exercise.name, index)" data-bs-toggle="modal" data-bs-target="#restTime">&#10004;</button>
+                  </div>
                 </div>
-                <div>
-                  <button type="button" @click="deleteSet(exercise, set)">&#10005;</button>
-                  <button v-if="!set.rest_time" type="button" @click="doneSet(exercise.name, index)">&#10004;</button>
-                </div>
-                <button class="" type="button" @click="tambahSet(exercise.name)" v-if="activeSessionIndex === i">add</button>          
+                <button class="btn btn-outline-dark btn-white rounded-0" style="align-self: end;" type="button" @click="tambahSet(exercise.name)">add</button>          
               </div>
             </div>
           </div>
         </div>
-      <!-- </div> -->
-      <button type="submit">save session</button>
+      <button type="submit" class="btn btn-outline-dark btn-white rounded-0" style="align-self: end;">save session</button>
     </form>
   </div>
 </template>
@@ -164,7 +177,7 @@ export default {
 
       this.restTimer = setInterval(() => {
         if (this.restTime <= 0) {
-          this.stopRest(exerciseName, index);
+          this.stopRest();
         } else {
           const targetExercise = this.form.exercises.find(exercise => exercise.exercise_name === exerciseName);
           if (targetExercise) {
@@ -178,6 +191,7 @@ export default {
       clearInterval(this.restTimer); // Hentikan timer
       this.isResting = false;
       this.restTime = 0; // Setel waktu istirahat ke 0
+      this.$refs.restModal.style.display = 'none';
     },
     generateCalendarDescription(data) {
 
