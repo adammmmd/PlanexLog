@@ -5,7 +5,7 @@
             <div class="exercise-plan" >
                 <nuxt-link class="add-plan" to="/plan/form">+</nuxt-link>
             </div>
-            <div v-for="plan in plans" class="exercise-plan">
+            <div v-for="(plan, i) in plans" class="exercise-plan" :key="i">
                 <ExercisePlan :planName="plan.plan_name" />
             </div>
         </div>

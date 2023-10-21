@@ -1,10 +1,6 @@
 <template>
   <div>
     <Header :title="stopwatchDisplay" />
-    <!-- <header class="session_header-container">
-        <div @click="cancelSession" class="session_header-back-btn">&#10005;</div>
-        <h2 class="session_header-title"></h2>
-      </header> -->
     <div class="modal fade" id="restTime" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" ref="restModal" @click="stopRest()">
       <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
@@ -62,6 +58,7 @@
 <script>
 import { mapGetters } from "vuex"
 import Header from '@/components/Header.vue'
+
 
 export default {
   layout: 'plain',

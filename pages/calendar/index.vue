@@ -5,15 +5,49 @@
             @eventClick="showSession"
         /> -->
 
-        <div class="calendar-events_container">
-            <div class="calendar-events_events-container">
-                <div v-for="(event, i) in events" :key="i" class="calendar-events_event-container">
-                    <h1 @click="toggleEvent(i)">{{ event.summary }}!!!!!</h1>
-                    <p v-if="selectedEvent === i">{{ event.description }}</p>
-                    <button v-if="selectedEvent === i" @click="deleteEvent(event.id)">delete</button>
+        <div class="container border border-black border-1 rounded-0 d-flex flex-column justify-content-start align-items-stretch p-2 m-auto" style="height: 100vh;">
+            <button class="btn btn-outline-dark btn-white rounded-0 align-self-end mb-5" @click="listEvents">Refresh</button>
+            <div class="accordion accordion-flush border border-black border-1 rounded-0 overflow-auto mb-3" style="max-height: 400px;">
+                <div  class="accordion-item border border-black border-1 rounded-0" v-for="(event, i) in events" :key="i">
+                    <div class="accordion-header">
+                        <button type="button" class="accordion-button collapsed" data-bs-toggle="collapse" :data-bs-target="'#collapse-' + i">
+                            <p class="fs-6 m-0 ms-2">{{ event.summary }}</p>
+                        </button>
+                    </div>
+                    <div class="accordion-collapse collapse" :id="'collapse-' + i">
+                        <div class="accordion-body">
+                            <button data-bs-toggle="popover" data-bs-placement="bottom" data-bs-content="Delete Event">&#xF5D3;</button>
+                            <button @click="deleteEvent(event.id)">delete</button>
+                            <div>
+                                <h2>{{ event.summary }}</h2>
+                                <div>
+                                    <strong>Nama Sesi:</strong> {{ getDescriptionValue(event.description, 'Nama Sesi:') }}
+                                </div>
+                                <div>
+                                    <strong>Berat Badan:</strong> {{ getDescriptionValue(event.description, 'Berat Badan:') }}
+                                </div>
+                                <div>
+                                    <strong>Lokasi:</strong> {{ getDescriptionValue(event.description, 'Lokasi:') }}
+                                </div>
+                                <div>
+                                    <strong>Waktu Mulai:</strong> {{ getDescriptionValue(event.description, 'Waktu Mulai:') }}
+                                </div>
+                                <div>
+                                    <strong>Waktu Selesai:</strong> {{ getDescriptionValue(event.description, 'Waktu Selesai:') }}
+                                </div>
+                                <div>
+                                    <strong>Daftar Latihan:</strong>
+                                    <ul>
+                                    <li v-for="(exercise, exIndex) in getExerciseList(event.description)" :key="exIndex">
+                                        {{ exercise }}
+                                    </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
-            <button @click="listEvents">event</button>
         </div>
     </div>
 </template>
@@ -23,6 +57,14 @@ import { mapGetters } from "vuex"
 // import FullCalendar from '@fullcalendar/vue'
 import interactionPlugin from '@fullcalendar/interaction'
 import dayGridPlugin from '@fullcalendar/daygrid'
+
+document.addEventListener('DOMContentLoaded', function () {
+    var popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'))
+    var popoverList = popoverTriggerList.map(function (popoverTriggerEl) {
+      return new bootstrap.Popover(popoverTriggerEl)
+    })
+})
+
 
 export default {
     layout: 'dashboard',
@@ -81,16 +123,32 @@ export default {
                 console.log(err)
                 return;
             }
+        },
+        getDescriptionValue(description, key) {
+            const regex = new RegExp(`${key}: (.*)`);
+            const match = description.match(regex);
+            if (match && match.length > 1) {
+                return match[1].trim();
+            }
+            return '';
+        },
+        getExerciseList(description) {
+            const exerciseList = [];
+            const regex = /\d+\.\s+\*\*(.*?)\*\*/g;
+            const matches = description.match(regex);
+            if (matches) {
+                matches.forEach(match => {
+                const exercise = match.replace(/\d+\.\s+\*\*|\*\*/g, '').trim();
+                exerciseList.push(exercise);
+                });
+            }
+            return exerciseList;
         }
     },
-    // created() {
-    //     // Panggil metode untuk menginisialisasi events di kalender
-    //     this.updateCalendarEvents();
-    // },
 }
 </script>
 <style>
-.calendar_container {
+/* .calendar_container {
     min-height: 100%;
     display: flex;
     justify-content: center;
@@ -140,12 +198,12 @@ export default {
     flex-direction: column;
     justify-content: flex-start;
     overflow: auto;
-    -ms-overflow-style: none;  /* Internet Explorer 10+ */
-    scrollbar-width: none;  /* Firefox */
+    -ms-overflow-style: none;  
+    scrollbar-width: none;  
 }
 
 .calendar-events_events-container::-webkit-scrollbar { 
-    display: none;  /* Safari and Chrome */
+    display: none; 
 }
 
 .calendar-events_event-container {
@@ -160,6 +218,6 @@ export default {
 
 .calendar-events_event-container p {
     padding: 20px 0px;
-}
+} */
 
 </style>
