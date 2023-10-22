@@ -1,14 +1,14 @@
 <template>
-<div>
-    <p>Google Calendar API Quickstart</p>
+    <div class="d-flex flex-column">
+        <p>Google Calendar API Quickstart</p>
 
-    <!-- Add buttons to initiate auth sequence and sign out -->
-    <button id="authorize_button" @click="handleAuthClick">Authorize</button>
-    <button id="signout_button" @click="handleSignoutClick">Sign Out</button>
-    
-    <Calendar />
+        <!-- Add buttons to initiate auth sequence and sign out -->
+        <button id="authorize_button" @click="handleAuthClick">Authorize</button>
+        <button id="signout_button" @click="handleSignoutClick">Sign Out</button>
+        
+        <Calendar />
 
-</div>
+    </div>
 
 </template>
 

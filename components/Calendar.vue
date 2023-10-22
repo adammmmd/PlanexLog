@@ -2,18 +2,18 @@
     <div class="container">
       <div class="calendar">
         <div class="month">
-          <i class="fas fa-angle-left prev" @click="prev"></i>
+          <button class="prev" @click="prev">&#8249;</button>
           <div class="date">
-            <h1>{{ currentMonth }}</h1>
-            <p>{{ currentDate }}</p>
+            <h1>{{ todaysMonth }}</h1>
+            <p>{{ todaysYear }}</p>
           </div>
-          <i class="fas fa-angle-right next" @click="next"></i>
+          <button class="next" @click="next">&#8250;</button>
         </div>
         <div class="weekdays">
-            <div v-for="(day, i) in weekdays" :key="i"></div>
+            <div v-for="(day, i) in weekdays" :key="i">{{ day }}</div>
         </div>
         <div class="days">
-            <div v-for="(day, i) in calendarDays" :key="i" :class="dayClass(day)" @click="handleDayClick(day)">{{ day.number }}</div>
+            <div v-for="(day, i) in days" :key="i" :class="dayClass(day)" @click="handleDayClick(day)">{{ day.number }}</div>
         </div>
       </div>
     </div>
@@ -26,15 +26,35 @@ export default {
         return {
             date: new Date(),
             selectedDate: null,
-            weekdays: ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"]
+            weekdays: ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
+            days: [],
+            todaysMonth: "",
+            todaysYear: ""
         }
     },
     computed: {
-        currentMonth() {
-           return this.getMonthName(this.date.getMonth());
+        
+    },
+    methods: {
+        getMonthName(monthIndex) {
+            const months = [
+                "January", "February", "March", "April", "May", "June", "July",
+                "August", "September", "October", "November", "December"
+            ];
+            return months[monthIndex];
         },
-        currentDate() {
-            return this.date.toDateString();
+        currentMonth() {
+          this.todaysMonth = this.getMonthName(this.date.getMonth());
+        },
+        currentYear() {
+          this.todaysYear = this.date.getFullYear();
+        },
+        dayClass(day) {
+            return {
+                "prev-date": day.prevMonth,
+                "today": !day.prevMonth && this.isToday(day.number),
+                "selected": !day.prevMonth && this.isSelected(day.number)
+            };
         },
         calendarDays() {
         // Logic to generate an array of calendar days here
@@ -45,6 +65,8 @@ export default {
             const firstDayIndex = firstDay.getDay();
             const lastDayIndex = lastDay.getDay();
             const nextDays = 7 - lastDayIndex - 1;
+
+            console.log(firstDay, lastDay, prevLastDay, firstDayIndex, lastDayIndex, nextDays)
 
             const days = [];
 
@@ -63,32 +85,24 @@ export default {
                 days.push({ number: j, prevMonth: true });
             }
 
-            return days;
-        }
-    },
-    methods: {
-        getMonthName(monthIndex) {
-            const months = [
-                "January", "February", "March", "April", "May", "June", "July",
-                "August", "September", "October", "November", "December"
-            ];
-            return months[monthIndex];
-        },
-        dayClass(day) {
-            return {
-                "prev-date": day.prevMonth,
-                "today": !day.prevMonth && this.isToday(day.number),
-                "selected": !day.prevMonth && this.isSelected(day.number)
-            };
-            // Logic to determine the CSS class for each day
-            // Modify your existing logic here
+            console.log(days)
+            this.currentMonth()
+            this.currentYear()
+
+            this.days = days
         },
         prev() {
+            console.log(this.date)
             this.date.setMonth(this.date.getMonth() - 1);
+            console.log(this.date)
+            this.calendarDays()
             // Call a function to update calendarDays and re-render the calendar
         },
         next() {
+            console.log(this.date)
             this.date.setMonth(this.date.getMonth() + 1);
+            console.log(this.date)
+            this.calendarDays()
             // Call a function to update calendarDays and re-render the calendar
         },
         isToday(day) {
@@ -108,28 +122,16 @@ export default {
         }
     },
     mounted() {
-        // Call a function to initialize and render the calendar
-        // You can use your existing renderCalendar function here
+      this.calendarDays()
+      this.currentMonth()
     }
 }
 </script>
 
 <style scoped>
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: "Quicksand", sans-serif;
-}
-
-html {
-  font-size: 62.5%;
-}
 
 .container {
   width: 100%;
-  height: 100vh;
-  background-color: #12121f;
   color: #eee;
   display: flex;
   justify-content: center;
@@ -214,6 +216,14 @@ html {
   background-color: #262626;
   border: 0.2rem solid #777;
   cursor: pointer;
+}
+
+.prev,
+.next {
+  border: 3px solid black;
+  width: 30px;
+  aspect-ratio: 1;
+  background-color: inherit;
 }
 
 .prev-date,
