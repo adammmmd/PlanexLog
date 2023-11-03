@@ -4,8 +4,7 @@
         <div class="month">
           <button class="prev" @click="prev">&#8249;</button>
           <div class="date">
-            <h1>{{ todaysMonth }}</h1>
-            <p>{{ todaysYear }}</p>
+            <h1>{{ todaysMonth }} {{ todaysYear }}</h1>
           </div>
           <button class="next" @click="next">&#8250;</button>
         </div>
@@ -13,7 +12,15 @@
             <div v-for="(day, i) in weekdays" :key="i">{{ day }}</div>
         </div>
         <div class="days">
-            <div v-for="(day, i) in days" :key="i" :class="dayClass(day)" @click="handleDayClick(day)">{{ day.number }}</div>
+            <div v-for="(day, i) in days" :key="i" :class="dayClass(day)" @click="handleDayClick(day)">
+              {{ day.number }}
+              <div
+                class="event-indicator"
+                v-if="hasEvent(day.date)"
+              >
+                &#9679;
+              </div>
+            </div>
         </div>
       </div>
     </div>
@@ -22,6 +29,9 @@
 <script>
 
 export default {
+    props: {
+      events: Array,gi
+    },
     data() {
         return {
             date: new Date(),
@@ -29,6 +39,7 @@ export default {
             weekdays: ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
             days: [],
             todaysMonth: "",
+            events: [],
             todaysYear: ""
         }
     },
@@ -36,6 +47,9 @@ export default {
         
     },
     methods: {
+        hasEvent(date) {
+          return this.events.some((event) => event.date.toDateString() === date.toDateString());
+        },
         getMonthName(monthIndex) {
             const months = [
                 "January", "February", "March", "April", "May", "June", "July",
@@ -72,17 +86,20 @@ export default {
 
             // Days from previous month
             for (let x = firstDayIndex; x > 0; x--) {
-                days.push({ number: prevLastDay - x + 1, prevMonth: true });
+                const date = new Date(this.date.getFullYear(), this.date.getMonth() - 1, prevLastDay - x + 1);
+                days.push({ number: prevLastDay - x + 1, prevMonth: true, date }); // Tambahkan properti date
             }
 
             // Days from current month
             for (let i = 1; i <= lastDay.getDate(); i++) {
-                days.push({ number: i, prevMonth: false });
+                const date = new Date(this.date.getFullYear(), this.date.getMonth(), i);
+                days.push({ number: i, prevMonth: false, date }); // Tambahkan properti date
             }
 
             // Days from next month
             for (let j = 1; j <= nextDays; j++) {
-                days.push({ number: j, prevMonth: true });
+                const date = new Date(this.date.getFullYear(), this.date.getMonth() + 1, j);
+                days.push({ number: j, prevMonth: true, date }); // Tambahkan properti date
             }
 
             console.log(days)
@@ -124,6 +141,11 @@ export default {
     mounted() {
       this.calendarDays()
       this.currentMonth()
+      this.events = [
+        { date: new Date(2023, 10, 5), title: "Meeting", details: "Detail meeting." },
+        // Tambahkan event lainnya sesuai kebutuhan
+      ];
+      console.log(this.events)
     }
 }
 </script>
@@ -132,29 +154,28 @@ export default {
 
 .container {
   width: 100%;
-  color: #eee;
+  color: black;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
 .calendar {
-  width: 45rem;
-  height: 52rem;
-  background-color: #222227;
-  box-shadow: 0 0.5rem 3rem rgba(0, 0, 0, 0.4);
+  width: 400px;
+  background-color: white;
+  border: 2px solid black;
+  padding: 1rem;
+  /* box-shadow: 0 0.5rem 3rem rgba(0, 0, 0, 0.4); */
 }
 
 .month {
   width: 100%;
-  height: 12rem;
-  background-color: #167e56;
+  background-color: white;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0 2rem;
   text-align: center;
-  text-shadow: 0 0.3rem 0.5rem rgba(0, 0, 0, 0.5);
+  /* text-shadow: 0 0.3rem 0.5rem rgba(0, 0, 0, 0.5); */
 }
 
 .month i {
@@ -163,7 +184,7 @@ export default {
 }
 
 .month h1 {
-  font-size: 3rem;
+  font-size: 1em;
   font-weight: 400;
   text-transform: uppercase;
   letter-spacing: 0.2rem;
@@ -171,50 +192,51 @@ export default {
 }
 
 .month p {
-  font-size: 1.6rem;
+  font-size: 1.6em;
 }
 
 .weekdays {
   width: 100%;
-  height: 5rem;
   padding: 0 0.4rem;
   display: flex;
   align-items: center;
 }
 
 .weekdays div {
-  font-size: 1.5rem;
+  font-size: 1em;
   font-weight: 400;
   letter-spacing: 0.1rem;
   width: calc(44.2rem / 7);
   display: flex;
   justify-content: center;
   align-items: center;
-  text-shadow: 0 0.3rem 0.5rem rgba(0, 0, 0, 0.5);
+  /* text-shadow: 0 0.3rem 0.5rem rgba(0, 0, 0, 0.5); */
 }
 
 .days {
   width: 100%;
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  grid-auto-rows: minmax(0, 1fr);
+  gap: 2px;
   padding: 0.2rem;
+  border: 2px solid black;
+  border-radius: 4px;
 }
 
 .days div {
-  font-size: 1.4rem;
-  margin: 0.3rem;
-  width: calc(40.2rem / 7);
-  height: 5rem;
+  font-size: 1em;
+  aspect-ratio: 1;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
-  text-shadow: 0 0.3rem 0.5rem rgba(0, 0, 0, 0.5);
   transition: background-color 0.2s;
 }
 
 .days div:hover:not(.today) {
-  background-color: #262626;
-  border: 0.2rem solid #777;
+  background-color: #dbc6ff;
+  border-radius: 4px;
   cursor: pointer;
 }
 
@@ -232,7 +254,9 @@ export default {
 }
 
 .today {
-  background-color: #167e56;
+  background-color: #B286FD;
+  border: 2px solid black;
+  border-radius: 4px;
 }
 
 </style>

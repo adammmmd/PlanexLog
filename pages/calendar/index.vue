@@ -1,9 +1,11 @@
 <template>
-    <div class="calendar_container">
+    <div class="container d-flex flex-row">
         <!-- <FullCalendar
             :options="calendarOptions"
             @eventClick="showSession"
         /> -->
+
+        <Calendar />
 
         <div class="container border border-black border-1 rounded-0 d-flex flex-column justify-content-start align-items-stretch p-2 m-auto" style="height: 100vh;">
             <button class="btn btn-outline-dark btn-white rounded-0 align-self-end mb-5" @click="listEvents">Refresh</button>
@@ -54,23 +56,14 @@
 
 <script>
 import { mapGetters } from "vuex"
-// import FullCalendar from '@fullcalendar/vue'
-import interactionPlugin from '@fullcalendar/interaction'
-import dayGridPlugin from '@fullcalendar/daygrid'
-
-document.addEventListener('DOMContentLoaded', function () {
-    var popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'))
-    var popoverList = popoverTriggerList.map(function (popoverTriggerEl) {
-      return new bootstrap.Popover(popoverTriggerEl)
-    })
-})
+import Calendar from '@/components/Calendar.vue';
 
 
 export default {
     layout: 'dashboard',
-    // components: {
-    //     FullCalendar
-    // },
+    components: {
+        Calendar,
+    },
     data() {
         return {
             eventsCalendar: [],
