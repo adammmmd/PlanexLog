@@ -8,8 +8,8 @@
         <Calendar />
 
         <div class="calendar-list__container shadow-main border-main">
-            <button class="btn align-self-end mb-5 border-main" @click="listEvents">Refresh</button>
-            <div class="">
+            <button class="btn" @click="listEvents">Refresh</button>
+            <div class="calendar-list__list-container border-main">
                 <div  class="accordion-item border border-black border-1 rounded-0" v-for="(event, i) in events" :key="i">
                     <div class="accordion-header">
                         <button type="button" class="accordion-button collapsed" data-bs-toggle="collapse" :data-bs-target="'#collapse-' + i">

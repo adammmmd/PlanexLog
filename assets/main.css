@@ -202,6 +202,19 @@ svg {
     box-shadow: 6px 6px 0px 0px rgba(0,0,0,1);
 }
 
+/* Components */
+.btn{
+    padding: 0.6rem 1rem;
+    border: 2px solid black;
+    background-color: white;
+    border-radius: 3px;
+    transition: background-color .3s;
+}
+
+.btn:hover{
+    background-color: #B286FD;
+}
+
 /* Header */
 .header{
     position: fixed;
@@ -407,7 +420,19 @@ svg {
     margin: 4rem 0;
     width: 100%;
     max-width: 400px;
-    height: 600px;
+    height: 400px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-end;
+    padding: 2rem;
+}
+
+.calendar-list__list-container{
+    margin-top: 1rem;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
