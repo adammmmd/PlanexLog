@@ -1,8 +1,8 @@
 <template>
-    <nav class="btn-group fixed-bottom mb-3 bottom-0 start-50 translate-middle-x" role="group">
-        <nuxt-link class="btn btn-light btn-outline-dark border-2 rounded-0" to="/plan" exact>Plans</nuxt-link>
-        <nuxt-link class="btn btn-light btn-outline-dark border-2 rounded-0" to="/calendar" exact>Calendar</nuxt-link>
-        <nuxt-link class="btn btn-light btn-outline-dark border-2 rounded-0" to="/profile" exact>Profile</nuxt-link>
+    <nav class="dashboard__container" role="group">
+        <nuxt-link class="dashboard__btn" to="/plan" exact>Plans</nuxt-link>
+        <nuxt-link class="dashboard__btn" to="/calendar" exact>Calendar</nuxt-link>
+        <nuxt-link class="dashboard__btn" to="/profile" exact>Profile</nuxt-link>
     </nav>
 </template>
 
@@ -39,9 +39,7 @@
     font-family: var(--ff-primary);
 } */
 
-.nuxt-link-exact-active {
-    background-color: yellow;
-}
+
 
 </style>
 

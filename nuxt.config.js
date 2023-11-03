@@ -15,7 +15,7 @@ export default {
     ],
     link: [
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
-      { rel: 'stylesheet', href: "https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" },
+      // { rel: 'stylesheet', href: "https://cdn.jsdelivr.net/  npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" },
       { rel: 'stylesheet', href: 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css' },
       { rel: 'stylesheet', href: 'https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap' }  
     ],
@@ -23,7 +23,7 @@ export default {
       { src: "https://apis.google.com/js/api.js", defer: true, async: true, },
       { src: "https://accounts.google.com/gsi/client", defer: true, async: true, },
       { src: "https://apis.google.com/js/platform.js?onload=init", defer: true, async: true },
-      { src: "https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" }
+      // { src: "https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" }
     ]
   },
 

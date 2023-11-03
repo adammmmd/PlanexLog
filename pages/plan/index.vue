@@ -1,12 +1,10 @@
 <template>
-    <div>  
-        <section class="mb-5">
-            <h1 class="fs-1">Your Plan</h1>
-            <div class="d-flex px-5 overflow-auto">
+    <div class="plan__container">  
+        <section class="plan__your-plan-container">
+            <h1 class="fs-800">Your Plan</h1>
+            <div class="plan__plan-container">
                 <div>
-                    <div class="card d-flex align-items-center justify-content-center border-2 rounded-0 border-black bg-white me-3" style="width: 10rem; height: 7rem;">
-                        <nuxt-link class="card-title text-center text-decoration-none" to="/plan/form">+</nuxt-link>
-                    </div>
+                    <nuxt-link class="plan__card fs-700 border-main shadow-main" to="/plan/form">+</nuxt-link>
                 </div>
                 <div v-for="(plan, i) in plans" :key="i">
                     <ExercisePlan :planName="plan.plan_name" />

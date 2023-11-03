@@ -1,5 +1,5 @@
 <template>
-    <div class="d-flex flex-column">
+    <div class="profile__container">
         <p>Google Calendar API Quickstart</p>
 
         <!-- Add buttons to initiate auth sequence and sign out -->

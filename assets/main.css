@@ -69,6 +69,26 @@ html:focus-within {
     scroll-behavior: smooth;
 }
 
+html {
+    font-size: 62.5%;
+    scroll-behavior: smooth; 
+}
+@media only screen and (max-width: 75em) {
+    html {
+        font-size: 59%; 
+    } 
+}
+@media only screen and (max-width: 56.25em) {
+    html {
+        font-size: 56%; 
+    } 
+}
+@media only screen and (min-width: 112.5em) {
+    html {
+        font-size: 65%; 
+    }     
+}
+
 html,
 body {
     height: 100%;
@@ -82,8 +102,9 @@ body {
 }
 
 /* A elements that don't have a class get default styles */
-a:not([class]) {
-    text-decoration-skip-ink: auto;
+a {
+    text-decoration: none;
+    color: black;
 }
 
 /* Make images easier to work with */
@@ -167,6 +188,130 @@ svg {
 .fs-400 { font-size: var(--fs-400); }
 .fs-500 { font-size: var(--fs-500); }
 .fs-600 { font-size: var(--fs-600); }
+.fs-700 { font-size: var(--fs-700); }
+.fs-800 { font-size: var(--fs-800); }
+.fs-900 { font-size: var(--fs-900); }
 
+
+.border-main {
+    border: 2px solid black;
+    border-radius: 6px;
+}
+
+.shadow-main{
+    box-shadow: 6px 6px 0px 0px rgba(0,0,0,1);
+}
+
+/* Header */
+.header{
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
+    background-color: white;
+    box-shadow: 0 10px 100px #0000001a;
+    border-bottom: 2px dashed black;
+}
+
+.header__content{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem 2rem;
+}
+
+.header__logo-container{
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+/* Dashboard Component */
+.dashboard__container{
+    position: fixed;
+    width: fit-content;
+    height: fit-content;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 999; 
+    display: flex;
+    flex-direction: row;
+    background-color: white;
+}
+
+.dashboard__btn{
+    width: 8rem;
+    text-align: center;
+    display: block;
+    padding: 1rem;
+    border: 2px solid black;
+}
+
+.nuxt-link-exact-active {
+    background-color: yellow;
+}
+
+
+/* plan page */
+.plan__container{
+    width: 100%;
+    height: 100%;
+    padding: 6rem 2rem;
+}
+
+.plan__your-plan-container{
+    padding: 2rem 0rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+.plan__plan-container{
+    width: 100%;
+    padding: 2rem;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 2rem;
+    overflow: auto;
+}
+
+.plan__card{
+    width: 11rem;
+    height: 8rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    text-align: center;
+    padding: 2rem;
+}
+
+.plan__plan-rec-container{
+    width: 100%;
+    margin: 2rem 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+/* calendar page */
+.calendar__container{
+    width: 100%;
+    height: 100%;
+    padding: 6rem 2rem;
+}
+
+
+/* Profile page */
+.profile__container{
+    width: 100%;
+    height: 100%;
+    padding: 6rem 2rem;
+}
 
 

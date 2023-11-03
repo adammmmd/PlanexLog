@@ -1,6 +1,6 @@
 <template>
     <div class="container">
-      <div class="calendar">
+      <div class="calendar border-main shadow-main">
         <div class="month">
           <button class="prev" @click="prev">&#8249;</button>
           <div class="date">
@@ -30,7 +30,7 @@
 
 export default {
     props: {
-      events: Array,gi
+      events: Array,
     },
     data() {
         return {
@@ -163,7 +163,6 @@ export default {
 .calendar {
   width: 400px;
   background-color: white;
-  border: 2px solid black;
   padding: 1rem;
   /* box-shadow: 0 0.5rem 3rem rgba(0, 0, 0, 0.4); */
 }
@@ -229,7 +228,7 @@ export default {
   aspect-ratio: 1;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
   transition: background-color 0.2s;
 }

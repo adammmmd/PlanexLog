@@ -1,5 +1,5 @@
 <template>
-    <div class="container d-flex flex-row">
+    <div class="calendar__container">
         <!-- <FullCalendar
             :options="calendarOptions"
             @eventClick="showSession"
@@ -7,8 +7,8 @@
 
         <Calendar />
 
-        <div class="container border border-black border-1 rounded-0 d-flex flex-column justify-content-start align-items-stretch p-2 m-auto" style="height: 100vh;">
-            <button class="btn btn-outline-dark btn-white rounded-0 align-self-end mb-5" @click="listEvents">Refresh</button>
+        <div class="container d-flex flex-column justify-content-start align-items-stretch p-2 m-auto shadow-main border-main" style="height: 100vh;">
+            <button class="btn align-self-end mb-5 border-main" @click="listEvents">Refresh</button>
             <div class="accordion accordion-flush border border-black border-1 rounded-0 overflow-auto mb-3" style="max-height: 400px;">
                 <div  class="accordion-item border border-black border-1 rounded-0" v-for="(event, i) in events" :key="i">
                     <div class="accordion-header">
