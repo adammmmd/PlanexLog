@@ -1,10 +1,48 @@
 <template>
-    <nav class="navbar navbar-expand-lg bg-white fixed-top border border-black border-2 p-0">
-        <div class="container-fluid pe-0">
-            <h2 class="navbar-brand m-0">PlanEx</h2>
-            <div class="d-flex">
-                <button class="btn btn-dark rounded-0" v-if="!loggedIn" id="authorize_button" @click="handleAuthClick">Authorize</button>
-                <nuxt-link class="btn btn-outline-dark border-1 rounded-0" v-if="loggedIn" to="/plan">Dashboard</nuxt-link>
+    <nav class="header">
+        <div class="header__header-home-content">
+            <div class="header__logo-container">
+                <h2 class="fs-800">PlanEx</h2>
+            </div>
+            <div class="header__main">
+                <ul class="header__links">
+                    <li class="header__link-wrapper">
+                        <a href="" class="header__link">tes1</a>
+                    </li>
+                    <li class="header__link-wrapper">
+                        <a href="" class="header__link">tes2</a>
+                    </li>
+                    <li class="header__link-wrapper">
+                        <a href="" class="header__link">tes3</a>
+                    </li>
+                    <li class="header__link-wrapper">
+                        <button class="header__link border-main" v-if="!loggedIn" id="authorize_button" @click="handleAuthClick">Authorize</button>
+                        <nuxt-link class="header__link shadow-main border-main" v-if="loggedIn" to="/plan">Dashboard</nuxt-link>
+                    </li>
+                </ul>
+                <div class="header__main-ham-menu-cont">
+                    <img src="@/assets/svg/ham-menu.svg" alt="" class="header__main-ham-menu" :class="{'d-none': isMenuOpen}" @click="toggleMenu">
+                    <img src="@/assets/svg/ham-menu-close.svg" alt="" class="header__main-ham-menu-close" :class="{'d-none' : !isMenuOpen}" @click="toggleMenu">
+                </div>
+            </div>
+        </div>
+        <div class="header__sm-menu" :class="{'header__sm-menu--active': isMenuOpen}">
+            <div class="header__sm-menu-content">
+                <ul class="header__sm-menu-links">
+                    <li class="header__sm-menu-link">
+                        <nuxt-link to="/">Home</nuxt-link>
+                    </li>
+                    <li class="header__sm-menu-link">
+                        <nuxt-link to="/about">About</nuxt-link>    
+                    </li>
+                    <li class="header__sm-menu-link">
+                        <nuxt-link to="/projects">Projects</nuxt-link>
+                    </li>
+                    <li class="header__sm-menu-link">
+                        <button class="header__link border-main" v-if="!loggedIn" id="authorize_button" @click="handleAuthClick">Authorize</button>
+                        <nuxt-link class="header__link shadow-main border-main" v-if="loggedIn" to="/plan">Dashboard</nuxt-link>
+                    </li>
+                </ul>
             </div>
         </div>
     </nav>
@@ -16,6 +54,7 @@ export default {
     layout: "dashboard",
     data() {
         return {
+            isMenuOpen: false,
             tokenClient: null,
             loggedIn: false,
             gapiInited: false,
@@ -27,6 +66,9 @@ export default {
         await this.loadGoogleIdentityServices();
     },
     methods: {
+        toggleMenu() {
+            this.isMenuOpen = !this.isMenuOpen;
+        },
         async loadGoogleApi() {
             gapi.load('client', this.initializeGapiClient);
         },

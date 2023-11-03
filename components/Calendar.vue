@@ -153,7 +153,8 @@ export default {
 <style scoped>
 
 .container {
-  width: 100%;
+  width: 50%;
+  padding: 1rem;
   color: black;
   display: flex;
   justify-content: center;
@@ -161,7 +162,8 @@ export default {
 }
 
 .calendar {
-  width: 400px;
+  width: 100%;
+  max-width: 400px;
   background-color: white;
   padding: 1rem;
   /* box-shadow: 0 0.5rem 3rem rgba(0, 0, 0, 0.4); */
@@ -183,7 +185,7 @@ export default {
 }
 
 .month h1 {
-  font-size: 1em;
+  font-size: 1.5rem;
   font-weight: 400;
   text-transform: uppercase;
   letter-spacing: 0.2rem;
@@ -202,7 +204,7 @@ export default {
 }
 
 .weekdays div {
-  font-size: 1em;
+  font-size: 1.5rem;
   font-weight: 400;
   letter-spacing: 0.1rem;
   width: calc(44.2rem / 7);
@@ -224,7 +226,7 @@ export default {
 }
 
 .days div {
-  font-size: 1em;
+  font-size: 1.5rem;
   aspect-ratio: 1;
   display: flex;
   flex-direction: column;
@@ -258,4 +260,14 @@ export default {
   border-radius: 4px;
 }
 
+@media only screen and (max-width: 37.5em){
+  .container{
+    width: 100%;
+    margin-bottom: 3rem;
+  }
+
+  .days div{
+    font-size: 1.2rem;
+  }
+}
 </style>

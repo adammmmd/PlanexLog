@@ -7,9 +7,9 @@
 
         <Calendar />
 
-        <div class="container d-flex flex-column justify-content-start align-items-stretch p-2 m-auto shadow-main border-main" style="height: 100vh;">
+        <div class="calendar-list__container shadow-main border-main">
             <button class="btn align-self-end mb-5 border-main" @click="listEvents">Refresh</button>
-            <div class="accordion accordion-flush border border-black border-1 rounded-0 overflow-auto mb-3" style="max-height: 400px;">
+            <div class="">
                 <div  class="accordion-item border border-black border-1 rounded-0" v-for="(event, i) in events" :key="i">
                     <div class="accordion-header">
                         <button type="button" class="accordion-button collapsed" data-bs-toggle="collapse" :data-bs-target="'#collapse-' + i">
