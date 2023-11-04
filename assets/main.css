@@ -393,6 +393,7 @@ svg {
 }
 
 .plan__card{
+    text-overflow: ellipsis;
     width: 11rem;
     height: 8rem;
     display: flex;
@@ -533,6 +534,68 @@ input[type="checkbox"]:checked {
     align-items: flex-start;
 }
 
+.plan-form__accordion-item{
+    width: 100%;
+    border: 1px solid black;
+}
+
+.plan-form__accordion-header{
+    width: 100%;
+    padding: 1.5rem .8rem;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.plan-form__accordion-title{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+/* .plan-form__accordion-collapse{
+    
+} */
+
+.plan-form__accordion-body{
+    padding: 2rem 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.plan-form__accordion-body-item{
+    width: 100%;
+    padding: .5rem .3rem;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
+
+
+/* session page */
+.plan-form__form-head-session{
+    width: 100%;
+    padding: 3rem 4rem;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+}
+
+.plan-form__form-head-input-cont{
+    margin: 2rem 0;
+}
+
+.plan-form__input{
+    width: 13rem;
+    padding: .4rem .5rem;
+    margin-right: 1rem;
+}
 
 /* calendar page */
 .calendar__container{
@@ -600,6 +663,11 @@ input[type="checkbox"]:checked {
 
     /* plan form mobile */
     .plan-form__form-head{
+        padding: 1rem 0.7rem;
+    }
+
+    /* session form mobile */
+    .plan-form__form-head-session{
         padding: 1rem 0.7rem;
     }
 }

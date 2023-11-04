@@ -1,7 +1,7 @@
 <template>
   <div>
     <Header :title="stopwatchDisplay" />
-    <div class="modal fade" id="restTime" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" ref="restModal" @click="stopRest()">
+    <div class="modal-container" id="restTime" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" ref="restModal" @click="stopRest()">
       <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
           <div class="modal-header">
@@ -18,41 +18,47 @@
       </div>
     </div>
 
-    <form class="container border border-black border-1 rounded-0 d-flex flex-column justify-content-start align-items-stretch p-4 m-auto" style="max-height: 100vh;" v-on:submit.prevent="save">
-      <div class="container d-flex flex-column justify-content-center align-items-start mb-3">
-        <p class="fs-4">{{ this.$route.params.session }}</p>
-        <div class="d-flex flex-row">
-          <input class="border-black border-2 rounded-0 me-3" v-model="form.body_weight" type="number" placeholder="body weight (kg)">
-          <input class="border-black border-2 rounded-0 me-3" v-model="form.location" type="text" placeholder="location">
+    <div class="plan-form__container">
+      <form class="plan-form__form-container border-main shadow-main" v-on:submit.prevent="save">
+        <div class="plan-form__form-head-session">
+          <p class="fs-800">{{ this.$route.params.session }}</p>
+          <div class="plan-form__form-head-input-cont">
+            <input class="plan-form__input border-main" v-model="form.body_weight" type="number" placeholder="body weight (kg)">
+            <input class="plan-form__input border-main" v-model="form.location" type="text" placeholder="location">
+          </div>
         </div>
-      </div>
-      <div class="accordion accordion-flush border border-black border-1 rounded-0 overflow-auto mb-3" style="max-height: 400px;">
-          <div class="accordion-item border border-black border-1 rounded-0" v-for="(exercise, i) in plan" :key="i">
-            <div class="accordion-header">
-              <button type="button" class="accordion-button collapsed" data-bs-toggle="collapse" :data-bs-target="'#collapse-' + i">
-                <img class="img-thumbnail border-black border-1 rounded-0" style="object-fit: cover; width: 50px; height: 50px;" :src="exercise.gifUrl" :alt="exercise.name">
-                <p class="fs-6 m-0 ms-2">{{ exercise.name }}</p>
-              </button>
-            </div>
-            <div class="accordion-collapse collapse" :id="'collapse-' + i">
-              <div class="accordion-body" >
-                <div class="d-flex flex-row justify-content-between align-items-center" v-for="(set, index) in exercise.sets" :key="index">
-                  <div>
-                    <input v-model="set.reps" type="number" name="reps" :id="`${exercise.name}repetition${index}`" placeholder="Rep" required>
-                    <input v-model="set.weight" type="number" name="weight" :id="`${exercise.name}weight${index}`" placeholder="Weight" required>
+        <div class="plan-form__list-container border-main">
+            <div class="plan-form__accordion-item" v-for="(exercise, i) in plan" :key="i">
+              <div class="plan-form__accordion-header" @click="toggleAccordion(i)">
+                  <div class="plan-form__accordion-title">
+                    <img class="plan-form__label-img" :src="exercise.gifUrl" :alt="exercise.name">
+                    <p class="fs-700">{{ exercise.name }}</p>
                   </div>
                   <div>
-                    <button type="button" @click="deleteSet(exercise, set)">&#10005;</button>
-                    <button v-if="!set.rest_time" type="button" @click="doneSet(exercise.name, index)" data-bs-toggle="modal" data-bs-target="#restTime">&#10004;</button>
+                    <p v-if="activeAccordion === i">&#9660;</p>
+                    <p v-else>&#9650;</p>
                   </div>
+              </div>
+              <div class="plan-form__accordion-collapse" v-if="activeAccordion === i">
+                <div class="plan-form__accordion-body" >
+                  <div class="plan-form__accordion-body-item" v-for="(set, index) in exercise.sets" :key="index">
+                    <div>
+                      <input v-model="set.reps" type="number" name="reps" :id="`${exercise.name}repetition${index}`" placeholder="Rep" required>
+                      <input v-model="set.weight" type="number" name="weight" :id="`${exercise.name}weight${index}`" placeholder="Weight" required>
+                    </div>
+                    <div>
+                      <button type="button" @click="deleteSet(exercise, set)">&#10005;</button>
+                      <button v-if="!set.rest_time" type="button" @click="doneSet(exercise.name, index)" data-bs-toggle="modal" data-bs-target="#restTime">&#10004;</button>
+                    </div>
+                  </div>
+                  <button class="btn btn-outline-dark btn-white rounded-0" style="align-self: end;" type="button" @click="tambahSet(exercise.name)">add</button>          
                 </div>
-                <button class="btn btn-outline-dark btn-white rounded-0" style="align-self: end;" type="button" @click="tambahSet(exercise.name)">add</button>          
               </div>
             </div>
           </div>
-        </div>
-      <button type="submit" class="btn btn-outline-dark btn-white rounded-0" style="align-self: end;">save session</button>
-    </form>
+        <button type="submit" class="btn btn-outline-dark btn-white rounded-0" style="align-self: end;">save session</button>
+      </form>
+    </div>
   </div>
 </template>
 <script>
@@ -67,6 +73,7 @@ export default {
   },
   data() {
     return{
+      activeAccordion: null,
       form: {
         session_name: this.$route.params.session,
         body_weight: 0,
@@ -132,6 +139,13 @@ export default {
     },
   },
   methods: {
+    toggleAccordion(index) {
+      if (this.activeAccordion === index) {
+        this.activeAccordion = null;
+      } else {
+        this.activeAccordion = index;
+      }
+    },
     cancelSession() {
       this.$router.go(-2)
     },
