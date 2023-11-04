@@ -1,8 +1,12 @@
 <template>
-    <header class="navbar navbar-expand-md d-flex justify-content-between bg-white fixed-top border border-black border-2 p-0">
-        <div class="btn btn-light btn-outline-dark rounded-0 border-2" @click="goToPrev">&#8249;</div>
-        <h2 class="navbar-brand justify-content-center fs-3 fw-bold m-0 p-0">{{ title }}</h2>
-        <div></div>
+    <header class="header">
+        <div class="header__header-content">
+            <div class="btn btn-light btn-outline-dark rounded-0 border-2" @click="goToPrev">&#8249;</div>
+            <div class="header__logo-container">
+                <h2 class="fs-800">{{ title }}</h2>
+            </div>
+            <div></div>
+        </div>
     </header>
 </template>
 <script>

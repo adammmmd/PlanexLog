@@ -233,6 +233,13 @@ svg {
     padding: 1rem 2rem;
 }
 
+.header__header-content{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem 2rem;
+}
+
 .header__logo-container{
     display: flex;
     align-items: center;
@@ -254,7 +261,7 @@ svg {
     list-style-type: none;
 }
 
-.header__link{
+/* .header__link{
     padding: 1rem 1.5rem;
     display: inline-block;
     font-size: 1.6rem;
@@ -264,7 +271,7 @@ svg {
     letter-spacing: 1px;
     font-weight: 700;
     transition: color .3s;
-}
+} */
 
 .header__link:hover {
     color: #B286FD; 
@@ -405,6 +412,128 @@ svg {
     align-items: flex-start;
 }
 
+/* plan form */
+.plan-form__container{
+    width: 100%;
+    height: 100%;
+    padding: 6rem 2rem;
+    display: flex;
+    justify-content: center;
+}
+
+.plan-form__form-container{
+    margin-top: 2rem;
+    width: 100%;
+    max-width: 600px;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: stretch;
+    padding: 2rem 1rem;
+}
+
+.plan-form__form-head{
+    width: 100%;
+    padding: 3rem 4rem;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-end;
+    justify-content: flex-start;
+}
+
+.plan-form__img-head{
+    object-fit: cover;
+    width: 50px;
+    aspect-ratio: 1;
+    margin-right: 2rem;
+}
+
+.plan-form__title-head{
+    width: 100%;
+    height: 3rem;
+    padding: 1rem;
+}
+
+.plan-form__filter-container{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+}
+
+.plan-form__search-bar{
+    width: 100%;
+    height: 3rem;
+    margin-right: 0.5rem;
+    padding: 0.3rem 1rem;
+}
+
+.plan-form__filter-bar{
+    width: 5.5rem;
+    height: 3rem;
+}
+
+.plan-form__list-container{
+    width: 100%;
+    height: 100%;
+    margin-bottom: 2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: stretch;
+    overflow: auto;
+}
+
+.plan-form__list{
+    border-top: 1px solid black;
+    border-bottom: 1px solid black;
+}
+
+.plan-form__list:nth-child(odd){
+    background-color: #fafafa;
+}
+
+.plan-form__list:nth-child(even){
+    background-color: #ffffff;
+}
+
+.plan-form__label{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 0.7rem 1rem;
+}
+
+input[type="checkbox"] {
+    width: 17px;
+    aspect-ratio: 1;
+    border: 2px solid black;
+    border-radius: 6px;
+    margin-right: 1rem;
+}
+
+input[type="checkbox"]:checked {
+    color: #B286FD;
+}
+
+.plan-form__label-img{
+    width: 40px;
+    aspect-ratio: 1;
+    object-fit: cover;
+    margin-right: 2rem;
+}
+
+.plan-form__label-desc-cont{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+
 /* calendar page */
 .calendar__container{
     width: 100%;
@@ -467,5 +596,10 @@ svg {
     /* calendar mobile */
     .calendar__container{
         flex-direction: column;
+    }
+
+    /* plan form mobile */
+    .plan-form__form-head{
+        padding: 1rem 0.7rem;
     }
 }

@@ -1,33 +1,31 @@
 <template>
     <div>
         <Header title="Build Plan"/>
-        <div class="my-5">
-            <form class="card border-1 rounded-0 border-black d-flex flex-column justify-content-start align-items-stretch p-4 m-auto" style="height: 100vh;" v-on:submit.prevent="handleSubmit">
-                <div class="d-flex flex-row justify-content-start align-items-end mb-3">
-                    <img class="img-thumbnail border-black border-1 rounded-0" style="object-fit: cover; width: 50px; height: 50px;" src="~/assets/istockphoto-1248698782-612x612.jpg" alt="exercise">
-                    <input v-model="form.plan_name" class="form-control form-control-sm border-black border-1 rounded-0 ms-3" type="text" placeholder="Exercise Name" required>
+        <div class="plan-form__container">
+            <form class="border-main shadow-main plan-form__form-container" v-on:submit.prevent="handleSubmit">
+                <div class="plan-form__form-head d-flex flex-row justify-content-start align-items-end mb-3">
+                    <img class="plan-form__img-head border-main" src="~/assets/istockphoto-1248698782-612x612.jpg" alt="exercise">
+                    <input v-model="form.plan_name" class="plan-form__title-head border-main" type="text" placeholder="Exercise Name" required>
                 </div>
-                <div class="d-flex flex-row justify-content-center align-items-center my-3">
-                    <input class="form-control form-control-sm border-black border-1 rounded-0" type="search" name="search" id="search" v-model="searchText" placeholder="Search">
-                    <select class="form-select form-select-sm border-black border-1 rounded-0 w-25 ms-1" name="target" id="target" v-model="selectedTarget">
+                <div class="plan-form__filter-container d-flex flex-row justify-content-center align-items-center my-3">
+                    <input class="plan-form__search-bar border-main form-control form-control-sm border-black border-1 rounded-0" type="search" name="search" id="search" v-model="searchText" placeholder="Search">
+                    <select class="plan-form__filter-bar border-main form-select form-select-sm border-black border-1 rounded-0 w-25 ms-1" name="target" id="target" v-model="selectedTarget">
                         <option value="">select target</option>
                         <option v-for="(target, i) in allTarget" :value="target" :key="i">{{ target }}</option>
                     </select>
                 </div>
-                <div class="card border-black border-1 rounded-0 mb-2 d-flex flex-column overflow-auto">
-                    <div class="card d-flex flex-row align-items-center justify-content-start border-1 border-black rounded-0 p-2 m-0" v-for="exercise in filteredExercises" :key="exercise.id">
-                        <label  class="d-flex flex-row align-items-center justify-content-start" :for="exercise.name">
+                <div class="plan-form__list-container border-main">
+                    <div class="plan-form__list card d-flex flex-row align-items-center justify-content-start border-1 border-black rounded-0 p-2 m-0" v-for="exercise in filteredExercises" :key="exercise.id">
+                        <label class="plan-form__label" :for="exercise.name">
                             <input type="checkbox" :name="exercise.name" :value="exercise.name" :id="exercise.name" v-model="form.exercises">
-                            <img class="img-thumbnail border-black border-1 rounded-0 ms-2" style="object-fit: cover; width: 50px; height: 50px;" :src="exercise.gifUrl" :alt="exercise.name">
-                            <div class="d-flex flex-column justify-content-start align-items-between ms-2" style="justify-items: stretch;">
-                                <h3 class="fs-6 fw-medium m-0">{{ exercise.name }}</h3>
-                                <p class="fs-6 m-0">{{ exercise.target }}</p>
+                            <img class="plan-form__label-img" :src="exercise.gifUrl" :alt="exercise.name">
+                            <div class="plan-form__label-desc-cont d-flex flex-column justify-content-start align-items-between ms-2" style="justify-items: stretch;">
+                                <h3 class="fs-600 fw-bold">{{ exercise.name }}</h3>
+                                <p class="fs-400">{{ exercise.target }}</p>
                             </div>
                         </label>
                     </div>
-                    <div class="d-grid">
-                        <button type="button" class="btn btn-outline-dark btn-white rounded-0" @click="addExercise" v-if="hasMoreExercises">Load More</button>
-                    </div>
+                    <button type="button" class="btn btn-outline-dark btn-white rounded-0" @click="addExercise" v-if="hasMoreExercises">Load More</button>
                 </div>
                 <button type="submit" class="btn btn-outline-dark btn-white rounded-0" style="align-self: end;" :disabled="!form.plan_name || !isAtLeastOneCheckboxSelected">Save</button>
             </form>
@@ -92,6 +90,15 @@ export default {
             if (this.hasMoreExercises) {
                 this.exerciseLimit += 30;
             }
+        }
+    },
+    async mounted() {
+        try {
+            await this.$store.dispatch('exercises/fetchExercises')
+            await this.$store.dispatch('session/loadSessionFromLocalStorage')
+            await this.$store.dispatch('plans/loadPlansFromLocalStorage')
+        } catch (error) {
+            console.error('Terjadi kesalahan:', error);
         }
     }
 

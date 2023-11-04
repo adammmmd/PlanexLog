@@ -30,7 +30,7 @@
             <div class="header__sm-menu-content">
                 <ul class="header__sm-menu-links">
                     <li class="header__sm-menu-link">
-                        <nuxt-link to="/">Home</nuxt-link>
+                        <nuxt-link to="/home">Home</nuxt-link>
                     </li>
                     <li class="header__sm-menu-link">
                         <nuxt-link to="/about">About</nuxt-link>    
@@ -39,8 +39,10 @@
                         <nuxt-link to="/projects">Projects</nuxt-link>
                     </li>
                     <li class="header__sm-menu-link">
-                        <button class="header__link border-main" v-if="!loggedIn" id="authorize_button" @click="handleAuthClick">Authorize</button>
-                        <nuxt-link class="header__link shadow-main border-main" v-if="loggedIn" to="/plan">Dashboard</nuxt-link>
+                        <div>
+                            <a class="header__link" v-if="!loggedIn" id="authorize_button" @click="handleAuthClick">Authorize</a>
+                            <nuxt-link class="header__link" v-if="loggedIn" to="/plan">Dashboard</nuxt-link>
+                        </div>
                     </li>
                 </ul>
             </div>

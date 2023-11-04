@@ -1,9 +1,11 @@
 <template>
     <div>
         <Header :title="this.$route.params.plan"/>
-        <div class="card border-1 rounded-0 border-black d-flex flex column justify-content-between align-items-stretch p-4 my-5" style="max-height: 100vh;">
-            <ExerciseList :plan="recommendPlan" />
-            <button class="btn btn-light btn-outline-dark border-2 rounded-0 border-black ml-auto align-self-end" style="justify-self: end;" @click="addPlan">Add to Plan</button>
+        <div class="plan-form__container">
+            <div class="border-main shadow-main plan-form__form-container">
+                <ExerciseList :plan="recommendPlan" />
+                <button class="btn" style="align-self: end;" @click="addPlan">Add to Plan</button>
+            </div>
         </div>
     </div>
 </template>

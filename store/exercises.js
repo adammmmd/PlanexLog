@@ -21,7 +21,7 @@ const actions = {
                 url: 'https://exercisedb.p.rapidapi.com/exercises',
                 params: {limit: '1324'},
                 headers: {
-                    'X-RapidAPI-Key': 'd4a81426e9msh5ba0640ee5d367cp1f3326jsn22f0855623bf',
+                    'X-RapidAPI-Key': '0103c033f1msh9c2bdc9210ec870p13323cjsn4936eff52802',
                     'X-RapidAPI-Host': 'exercisedb.p.rapidapi.com'
                 }
             };

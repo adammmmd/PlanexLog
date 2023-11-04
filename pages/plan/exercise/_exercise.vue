@@ -1,11 +1,13 @@
 <template>
     <div>
         <Header :title="this.$route.params.exercise" />
-        <div class="card border-1 rounded-0 border-black d-flex flex column justify-content-between align-items-stretch p-4 my-5" style="max-height: 100vh;">
-            <ExerciseList :plan="plan" />
-            <div class="align-self-end">
-                <button class="btn btn-light btn-outline-dark border-2 rounded-0 border-black ml-auto " style="justify-self: end;" @click="deletePlan">Delete</button>
-                <nuxt-link class="btn btn-light btn-outline-dark border-2 rounded-0 border-black ml-auto " style="justify-self: end;" :to="`/plan/exercise/session/${this.$route.params.exercise}`">Start</nuxt-link>
+        <div class="plan-form__container">
+            <div class="border-main shadow-main plan-form__form-container">
+                <ExerciseList :plan="plan" />
+                <div style="align-self: flex-end;">
+                    <button class="btn btn-light btn-outline-dark border-2 rounded-0 border-black ml-auto " style="justify-self: end;" @click="deletePlan">Delete</button>
+                    <nuxt-link class="btn btn-light btn-outline-dark border-2 rounded-0 border-black ml-auto " style="justify-self: end;" :to="`/plan/exercise/session/${this.$route.params.exercise}`">Start</nuxt-link>
+                </div>
             </div>
         </div>
     </div>

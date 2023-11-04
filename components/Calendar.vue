@@ -29,9 +29,9 @@
 <script>
 
 export default {
-    props: {
-      events: Array,
-    },
+    // props: {
+    //   events: Array,
+    // },
     data() {
         return {
             date: new Date(),
