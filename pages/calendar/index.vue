@@ -5,7 +5,7 @@
             @eventClick="showSession"
         /> -->
 
-        <Calendar />
+        <Calendar @date-clicked="showEventDescription" />
 
         <div class="calendar-list__container shadow-main border-main">
             <button class="btn" @click="listEvents" style="margin-bottom: 1rem;">Refresh</button>
@@ -95,6 +95,9 @@ export default {
         }
     },
     methods: {
+        showEventDescription(date) {
+            this.selectedDate = date; // Update the selectedDate when a date is clicked
+        },
         toggleAccordion(index) {
             if (this.activeAccordion === index) {
                 this.activeAccordion = null;

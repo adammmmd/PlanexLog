@@ -47,6 +47,9 @@ export default {
         
     },
     methods: {
+        handleDateClick(arg) {
+          this.$emit('date-clicked', arg.dateStr); // Emit a custom event with the date
+        },
         hasEvent(date) {
           return this.events.some((event) => event.date.toDateString() === date.toDateString());
         },
