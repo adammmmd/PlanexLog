@@ -22,14 +22,16 @@
                     </div>
                     <div class="plan-form__accordion-collapse" :class="{ 'collapse-open': activeAccordion === i }">
                         <div class="plan-form__accordion-body">
-                            <div>
-                                <h2>{{ event.summary }}</h2>
+                            <div class="plan-form__accordion-body-head">
+                                <h2 class="fs-700">{{ event.summary }}</h2>
                                 <div>
-                                    <img src="@/assets/svg/three-dots-vertical.svg" >
-                                    <button @click="deleteEvent(event.id)" style="display: hidden;">delete</button>
+                                    <button class="btn">
+                                        <img src="@/assets/svg/three-dots-vertical.svg" >
+                                    </button>
+                                    <button @click="deleteEvent(event.id)" style="visibility: hidden;">delete</button>
                                 </div>
                             </div>
-                            <div>
+                            <div class="plan-form__accordion-body-item">
                                 <div>
                                     <strong>Nama Sesi:</strong> {{ getDescriptionValue(event.description, 'Nama Sesi:') }}
                                 </div>
