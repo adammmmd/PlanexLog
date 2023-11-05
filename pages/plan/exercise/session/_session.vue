@@ -32,7 +32,7 @@
               <div class="plan-form__accordion-header" @click="toggleAccordion(i)">
                   <div class="plan-form__accordion-title">
                     <img class="plan-form__label-img" :src="exercise.gifUrl" :alt="exercise.name">
-                    <p class="fs-700">{{ exercise.name }}</p>
+                    <p class="fs-700" style="cursor: pointer;" @click="openModal(exercise.instructions)">{{ exercise.name }}</p>
                   </div>
                   <div class="plan-form__accordion-arrow">
                     <img src="@/assets/svg/dash-circle.svg" v-if="activeAccordion === i">
@@ -59,17 +59,18 @@
         <button type="submit" class="btn btn-outline-dark btn-white rounded-0" style="align-self: end;">save session</button>
       </form>
     </div>
+    <Modal v-if="showModal" titleData="Instructions" :bodyData="modalDescription"  @closeModal="showModal = false" />
   </div>
 </template>
 <script>
 import { mapGetters } from "vuex"
 import Header from '@/components/Header.vue'
-
+import Modal from "@/components/Modal.vue"
 
 export default {
   layout: 'plain',
   components: {
-    Header
+    Header, Modal
   },
   data() {
     return{
@@ -139,6 +140,11 @@ export default {
     },
   },
   methods: {
+    openModal(descriptionArray) {
+      const descriptionHtml = `<ol>${descriptionArray.map(item => `<li class="fs-600">${item}</li>`).join('')}</ol>`;
+      this.modalDescription = descriptionHtml; // Mengatur data untuk modal
+      this.showModal = true; // Mengirim data HTML ke parent component
+    },
     toggleAccordion(index) {
       if (this.activeAccordion === index) {
         this.activeAccordion = null;

@@ -3,21 +3,29 @@
         <Header :title="this.$route.params.plan"/>
         <div class="plan-form__container">
             <div class="border-main shadow-main plan-form__form-container">
-                <ExerciseList :plan="recommendPlan" />
+                <ExerciseList :plan="recommendPlan" @openModal="openModal" />
                 <button class="btn" style="align-self: end;" @click="addPlan">Add to Plan</button>
             </div>
         </div>
+        <Modal v-if="showModal" titleData="Instructions" :bodyData="modalDescription"  @closeModal="showModal = false" />
     </div>
 </template>
 <script>
 import { mapGetters } from "vuex"
 import Header from "@/components/Header.vue"
 import ExerciseList from "@/components/ExerciseList"
+import Modal from "@/components/Modal.vue"
 
 export default {
     layout: 'plain',
     components: {
-        Header, ExerciseList
+        Header, ExerciseList,Modal
+    },
+    data(){
+        return {
+            modalDescription: [],
+            showModal: false,
+        }
     },
     computed: {
         ...mapGetters({
@@ -27,10 +35,15 @@ export default {
         recommendPlan() {
             const recommend = this.getRecommendByName(this.$route.params.plan)
             const data = this.getExercisesByNames(recommend)
+            console.log(data)
             return data
         }
     },
     methods: {
+        openModal(description) {
+            this.modalDescription = description; // Mengatur data untuk modal
+            this.showModal = true;
+        },
         addPlan() {
             const recommend = {
                 plan_name: this.$route.params.plan,

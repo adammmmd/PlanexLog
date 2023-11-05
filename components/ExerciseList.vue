@@ -4,7 +4,7 @@
             <div class="plan-form__label">
                 <img class="img-thumbnail border-black border-1 rounded-0 ms-2" style="object-fit: cover; width: 50px; height: 50px;" :src="exercise.gifUrl" :alt="exercise.name">
                 <div class="d-flex flex-column justify-content-start align-items-between ms-2" style="justify-items: stretch;">
-                    <h2 class="fs-6 fw-medium m-0">{{exercise.name}}</h2>
+                    <h2 class="fs-700" style="cursor: pointer;" @click="openModal(exercise.instructions)">{{exercise.name}}</h2>
                     <p class="fs-6 m-0">{{exercise.target}}</p>
                 </div>
             </div>
@@ -13,7 +13,14 @@
 </template>
 <script>
 
+
 export default {
+    methods: {
+        openModal(descriptionArray) {
+            const descriptionHtml = `<ol>${descriptionArray.map(item => `<li class="fs-600">${item}</li>`).join('')}</ol>`;
+            this.$emit('openModal', descriptionHtml); // Mengirim data HTML ke parent component
+        },
+    },
     props: {
         plan: Array
     }

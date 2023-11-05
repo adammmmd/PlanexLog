@@ -20,7 +20,7 @@
                             <input type="checkbox" :name="exercise.name" :value="exercise.name" :id="exercise.name" v-model="form.exercises">
                             <img class="plan-form__label-img" :src="exercise.gifUrl" :alt="exercise.name">
                             <div class="plan-form__label-desc-cont d-flex flex-column justify-content-start align-items-between ms-2" style="justify-items: stretch;">
-                                <h3 class="fs-600 fw-bold">{{ exercise.name }}</h3>
+                                <h3 class="fs-600 fw-bold" style="cursor: pointer;" @click="openModal(exercise.instructions)">{{ exercise.name }}</h3>
                                 <p class="fs-400">{{ exercise.target }}</p>
                             </div>
                         </label>
@@ -30,6 +30,7 @@
                 <button type="submit" class="btn btn-outline-dark btn-white rounded-0" style="align-self: end;" :disabled="!form.plan_name || !isAtLeastOneCheckboxSelected">Save</button>
             </form>
         </div>
+        <Modal v-if="showModal" titleData="Instructions" :bodyData="modalDescription"  @closeModal="showModal = false" />
     </div>
 </template>
 
@@ -38,12 +39,13 @@ import { mapGetters } from "vuex"
 import allTargetMuscles from "@/assets/all_muscles.json"
 import allExercisesData from "@/assets/all_exercise.json"
 import Header from "@/components/Header.vue"
+import Modal from "@/components/Modal.vue"
 
 
 export default {
     layout: 'plain',
     components: {
-        Header
+        Header, Modal
     },
     data() {
         return{
@@ -55,7 +57,9 @@ export default {
             form: {
                 plan_name: '',
                 exercises: []
-            }
+            },
+            modalDescription: [],
+            showModal: false,
         }
     },
     computed: {
@@ -82,6 +86,11 @@ export default {
         },
     },
     methods: {
+        openModal(descriptionArray) {
+            const descriptionHtml = `<ol>${descriptionArray.map(item => `<li class="fs-600">${item}</li>`).join('')}</ol>`;
+            this.modalDescription = descriptionHtml; // Mengatur data untuk modal
+            this.showModal = true; // Mengirim data HTML ke parent component
+        },
         handleSubmit() { 
             this.$store.dispatch('plans/savePlan', this.form);
             this.$router.go(-1)
