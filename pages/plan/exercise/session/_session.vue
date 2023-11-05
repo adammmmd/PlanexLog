@@ -34,12 +34,12 @@
                     <img class="plan-form__label-img" :src="exercise.gifUrl" :alt="exercise.name">
                     <p class="fs-700">{{ exercise.name }}</p>
                   </div>
-                  <div>
-                    <p v-if="activeAccordion === i">&#9660;</p>
-                    <p v-else>&#9650;</p>
+                  <div class="plan-form__accordion-arrow">
+                    <img src="@/assets/svg/dash-circle.svg" v-if="activeAccordion === i">
+                    <img src="@/assets/svg/plus-circle.svg" v-else>
                   </div>
               </div>
-              <div class="plan-form__accordion-collapse" v-if="activeAccordion === i">
+              <div class="plan-form__accordion-collapse" :class="{ 'collapse-open': activeAccordion === i }">
                 <div class="plan-form__accordion-body" >
                   <div class="plan-form__accordion-body-item" v-for="(set, index) in exercise.sets" :key="index">
                     <div>

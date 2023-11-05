@@ -1,10 +1,19 @@
 <template>
     <div class="home-container">
         <h1>hello</h1>
+        <Modal />
     </div>
 </template>
 
 <script>
+import Modal from '@/components/Modal.vue';
+
+export default {
+    components: {
+        Modal
+    },
+}
+
 
 </script>
 

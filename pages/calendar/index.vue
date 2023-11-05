@@ -8,20 +8,28 @@
         <Calendar />
 
         <div class="calendar-list__container shadow-main border-main">
-            <button class="btn" @click="listEvents">Refresh</button>
-            <div class="calendar-list__list-container border-main">
-                <div  class="accordion-item border border-black border-1 rounded-0" v-for="(event, i) in events" :key="i">
-                    <div class="accordion-header">
-                        <button type="button" class="accordion-button collapsed" data-bs-toggle="collapse" :data-bs-target="'#collapse-' + i">
-                            <p class="fs-6 m-0 ms-2">{{ event.summary }}</p>
-                        </button>
+            <button class="btn" @click="listEvents" style="margin-bottom: 1rem;">Refresh</button>
+            <div class="plan-form__list-container border-main">
+                <div  class="plan-form__accordion-item" v-for="(event, i) in events" :key="i">
+                    <div class="plan-form__accordion-header"  @click="toggleAccordion(i)">
+                        <div class="plan-form__accordion-title">
+                            <p class="fs-700">{{ event.summary }}</p>
+                        </div>
+                        <div class="plan-form__accordion-arrow">
+                            <img src="@/assets/svg/dash-circle.svg" v-if="activeAccordion === i">
+                            <img src="@/assets/svg/plus-circle.svg" v-else>
+                        </div>
                     </div>
-                    <div class="accordion-collapse collapse" :id="'collapse-' + i">
-                        <div class="accordion-body">
-                            <button data-bs-toggle="popover" data-bs-placement="bottom" data-bs-content="Delete Event">&#xF5D3;</button>
-                            <button @click="deleteEvent(event.id)">delete</button>
+                    <div class="plan-form__accordion-collapse" :class="{ 'collapse-open': activeAccordion === i }">
+                        <div class="plan-form__accordion-body">
                             <div>
                                 <h2>{{ event.summary }}</h2>
+                                <div>
+                                    <img src="@/assets/svg/three-dots-vertical.svg" >
+                                    <button @click="deleteEvent(event.id)" style="display: hidden;">delete</button>
+                                </div>
+                            </div>
+                            <div>
                                 <div>
                                     <strong>Nama Sesi:</strong> {{ getDescriptionValue(event.description, 'Nama Sesi:') }}
                                 </div>
@@ -66,6 +74,7 @@ export default {
     },
     data() {
         return {
+            activeAccordion: null,
             eventsCalendar: [],
             selectedEvent: null,
         }
@@ -84,11 +93,11 @@ export default {
         }
     },
     methods: {
-        toggleEvent(index) {
-            if(this.selectedEvent === index) {
-                this.selectedEvent = null
+        toggleAccordion(index) {
+            if (this.activeAccordion === index) {
+                this.activeAccordion = null;
             } else {
-                this.selectedEvent = index
+                this.activeAccordion = index;
             }
         },
         async listEvents() {
